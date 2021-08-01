@@ -1,0 +1,41 @@
+<%- include("partials/header.ejs") %>
+
+
+  <body class=list>
+
+    <!-- Overlay When Open Navigation Bar -->
+    <div id="bodyOverlay"> </div>
+
+    <!-- Menu Button for Mobile -->
+    <div class="button-menu" id="menuToggle">
+      <input type="checkbox" />
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <!-- Header  -->
+    <div id="sidebarMenu" class="px-4">
+      <div class="today mt-2 mb-2 ">
+        <h1 class = listTitle name= "listTitle">
+          <%=list.name%>
+        </h1>
+      </div>
+    </div>
+
+
+    <!-- Add NeW Task -->
+    <div class=" new-item px-4 pt-3">
+      <form action="/listTasks" method="post">
+        <div class="input">
+          <button type="submit" name="listButton " value=<%=list.name%> required>
+            <i class="fas fa-plus fa-fw"></i></button>
+          <input type="text" name="listTasks" placeholder="New Task">
+        </div>
+      </form>
+    </div>
+  </body>
+
+
+
+<%- include("partials/footer.ejs") %>

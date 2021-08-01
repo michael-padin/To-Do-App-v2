@@ -1,0 +1,45 @@
+<%- include("partials/header.ejs") %>
+
+
+    <body class="tasks">
+        <div id="bodyOverlay"> </div>
+        <!-- Menu Button for Mobile -->
+        <div class="button-menu" id="menuToggle">
+            <input type="checkbox" />
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <div id="sidebarMenu" class="px-4">
+            <div class="today mt-2 mb-2">
+                <h1 class="  text-white mb-0">
+                    <%= allTaskTitle %>
+                </h1>
+            </div>
+        </div>
+
+
+        <div class="page-content p-4" id="content">
+            <div class="content pt-4 mt-5 mb-5 ">
+                <%newTaskItem.forEach((item)=>{%>
+                    <div class="items">
+                        <input type="checkbox">
+                            <%=item.name%>
+                    </div>
+                    <%});%>
+            </div>
+        </div>
+
+
+        <div class=" new-item px-4 pt-3">
+            <form action="/tasks" method="post">
+                <div class="input">
+                    <button type="submit" name="allTaskButton" value="<%=allTaskTitle%>" required>
+                        <i class="fas fa-plus fa-fw"></i></button>
+                    <input type="text" name="allTaskInput" placeholder="New Task">
+                </div>
+            </form>
+        </div>
+    </body>
+<%-include('partials/footer.ejs') %>

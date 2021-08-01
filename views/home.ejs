@@ -1,0 +1,49 @@
+<%- include("partials/header.ejs") %>
+
+
+ 
+  <body class="home">
+
+    <!-- Overlay When Open Navigation Bar -->
+    <div id="bodyOverlay"> </div>
+
+    <!-- Menu Button for Mobile -->
+    <div class="button-menu" id="menuToggle">
+      <input type="checkbox"/>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <!-- Title -->
+    <div id="sidebarMenu" class="px-4">
+      <div class="today mb-2 ">
+        <h1 class="text-white mb-0">
+          <%=homeTitle%>
+        </h1>
+          <p class=" text-white mb-1">
+          <%=date%>
+        </p>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="page-content p-4 " id="content">
+      <div class="content">
+        <%newTaskItem.forEach((item)=>{%>
+          <div class="items">
+            <i class="delete far fa-trash-alt"></i>
+            <input type="checkbox">
+            <p class="mb-0">
+              <%=item.name%>
+            </p>
+          </div>
+          <%});%>
+        </div>
+    </div>
+  </body>
+
+  <!-- Input for New Task -->
+  <%- include("task.ejs") %>
+
+<%- include("partials/footer.ejs") %>

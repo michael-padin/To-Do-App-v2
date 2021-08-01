@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+
+    <!-- font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
+        integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
+    <!-- bootstrap stylesheeet -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- local stylesheet -->
+    <link rel="stylesheet" href="/css/styles.css">
+
+</head>
+<!-- Vertical navbar -->
+<div class=" vertical-nav" id="sidebar">
+    <div class="py-4 px-3 mr-3 mb-0 bg-light">
+        <div class="media d-flex align-items-center">
+            <i class="fas fa-check img-thumbnail shadow-sm"></i>
+            <div class="media-body">
+                <h4 class="m-0"></h4>
+                <h2 class="font-weight-normal text-muted mb-0 ms-2">To Do List</h2>
+            </div>
+        </div>
+    </div>
+
+    <ul class="nav flex-column  mb-0">
+        <li class="nav-item">
+            <a href="/" class="nav-link text-dark ">
+                <i class="nav-icon fas fa-cloud-sun"></i>
+                Today
+                <p class="mb-0 text-muted" id="gwapo"></p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/important" class=" nav-link text-dark">
+                <i class="nav-icon far fa-star mr-3  fa-fw"></i>
+                Important
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/tasks" class="nav-link text-dark">
+                <i class=" nav-icon fas fa-tasks mr-3 fa-fw"></i>
+                Tasks
+
+            </a>
+        </li>
+
+        <!-- Separator -->
+        <div class="nav-separator"></div>
+
+        <!-- Created List -->
+        <li class="nav-item">
+
+            <% for(var i = 0; i<lists.length; i++){ %>
+            <a href="/lists/<%=lists[i].name%>" class="nav-link text-dark">
+                <%= lists[i].name %>
+            </a>
+            <%};%>
+
+
+        </li>
+
+        <!-- Add New List -->
+        <li class="nav-item">
+            <form action="/lists/" method="POST">
+                <button type="submit" class="btn-submit" id="listBtn" name="listName" value="<%=lists%> ">
+                    <i class=" nav-icon fas fa-plus fa-fw"></i>
+                </button>
+                <input class="new-list" type="text" name="newList" id="" placeholder="New List">
+            </form>
+        </li>
+
+    </ul>
+</div>
+
+<!-- end of navigation bar -->
+<!-- Page content holder -->

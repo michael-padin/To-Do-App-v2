@@ -1,0 +1,475 @@
+body.home {
+  background-color: #abc4ff;
+
+  height: 100vh;
+}
+
+body.list {
+  background-color: #aaa;
+  min-width: 100%;
+}
+
+.listTitle {
+  text-transform: capitalize;
+}
+
+h1 {
+  color: #3d405b;
+
+}
+
+.today p {
+  color: #9381ff;
+}
+
+#sidebarCollapse {
+  border: none;
+  color: #fff;
+  background-color: transparent;
+
+}
+
+
+#sidebarMenu {
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
+
+  background-color: #abc4ff;
+
+  backdrop-filter: blur(10px) saturate(100%);
+  -webkit-backdrop-filter: blur(10px) saturate(100%) contrast(100%);
+  position: fixed;
+  width: 100%;
+  z-index: 5;
+  margin-left: 15rem;
+  top: 0;
+  border: none;
+  
+
+}
+
+
+#menuToggle {
+  background-color: none;
+  outline: none;
+  display: inline-block;
+  position: fixed;
+  left: 24px;
+  top: 15px;
+  transition: all 0.4s;
+  z-index: 7;
+}
+
+
+.page-content {
+  
+  position: relative;
+  width: calc(100% -15rem);
+  margin-left: 15rem;
+  white-space: nowrap;
+}
+.content {
+  position: relative;
+  margin-top: 6rem;
+  margin-bottom: 4rem;
+
+}
+
+.items {  
+  border-radius: 4.5px;
+  align-items: center;
+  display: flex;
+  overflow: hidden;
+  height: 50px;
+  margin-bottom: 3px;
+  background-color: #fff;
+  box-shadow: 1px 1px 1px px rgba(0, 0, 0, 0.3);
+
+  
+}
+
+.items p {
+  margin: 0 0 0 .5rem;
+}
+
+.items input {
+  z-index: 1;
+  margin-left: .5rem;
+}
+
+.items input:checked+p {
+  text-decoration: line-through;
+}
+
+.items input[type="checkbox"] {
+  z-index: 4;
+  color: #000;
+  border: none;
+}
+
+.delete {
+  z-index: 2;
+  margin-left: .5rem;
+  opacity: 0.4;
+  font-size: .8rem;
+}
+
+.today {
+  height: 100%;
+  width: 100%;
+}
+
+/* IMPORTANT PAGE */
+body.important {
+  background-color: #b4846c;
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+}
+
+.important-header {
+  display: flex;
+  align-items: center;
+}
+
+.important-header i {
+  color: #fff;
+  vertical-align: middle;
+  font-size: 20px;
+  margin: 0 10px 0 0;
+}
+
+/* end of important page */
+
+/* TASKS PAGE */
+body.tasks {
+  background-color: hsl(0, 100%, 35%);
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+}
+
+.task-header {
+  display: flex;
+  align-items: center;
+}
+
+.task-header i {
+  align-items: center;
+  color: #fff;
+  font-size: 20px;
+  margin: 0 10px 0 0;
+}
+
+/* //////////////////////////////////////////////// TASKS PAGE //////////////////////////////////////////////*/
+
+/* Navigation Bar */
+.vertical-nav {
+  align-items: center;
+  width: 15rem;
+  max-width: 15rem;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: all 0.4s;
+  z-index: 20;
+  overflow-y: auto;
+  background-color: #fff;
+
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+.nav-separator {
+  margin: 15px auto;
+  border-bottom: 1px #aaa dotted;
+  position: relative;
+  width: 80%;
+}
+
+.nav-item {
+  align-items: center;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  text-transform: capitalize;
+  font-size: 20px;
+}
+
+.nav-item p {
+  font-size: 13px;
+  margin-left: 7rem;
+}
+
+.nav-link:hover {
+  background: #f3f2f2;
+}
+
+.btn-submit {
+  border: none;
+  background: transparent;
+  padding-left: 15px;
+}
+
+/* ////////////////////////////////////////////////END OF NAVIGATION BAR //////////////////////////////////////////////*/
+
+/* New List */
+.new-list {
+  display: inline-block;
+  height: 50px;
+  text-align: left;
+  width: 10rem;
+  background: transparent;
+  border: none;
+}
+
+.new-list:focus {
+  outline: none;
+  box-shadow: inset 0 -2px 0 0 #aaa;
+}
+
+::placeholder {
+  color: #aaa;
+  opacity: 8;
+}
+
+/* ////////////////////////////////////////////////END OF NEW LIST //////////////////////////////////////////////*/
+
+/* icons */
+.nav-icon {
+  margin-right: 8px;
+}
+
+.fa-cloud-sun {
+  color: #809bce;
+  font-size: 15px;
+  
+}
+
+.fa-star {
+  color: #f6bd60;
+  font-size: 16px;
+}
+
+.fa-tasks {
+  color: skyblue;
+  font-size: 16px;
+}
+
+.fa-plus {
+  color: #2a9d8f;
+  font-size: 16px;
+}
+
+.fa-check {
+  font-size: 35px;
+  margin-right: 2px;
+}
+
+/* ////////////////////////////////////////////////END OF ICONS //////////////////////////////////////////////*/
+
+/* CONTENT */
+
+.separator {
+  margin: 3rem 0;
+  border-bottom: 1px dashed #fff;
+}
+
+
+
+
+/* ////////////////////////////////////////////////END OF CONTENT//////////////////////////////////////////////*/
+
+/* NEW TASKS */
+.new-item {
+  z-index: 5;
+  margin-left: 15rem;
+  width: calc(100% - 15rem);
+  bottom: 0px;
+  position: fixed;
+  height: 60px;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+  transition: all 0.4s;
+  background-color: #abc4ff;
+  backdrop-filter: blur(10px) saturate(100%);
+  -webkit-backdrop-filter: blur(10px) saturate(100%) contrast(100%);
+}
+
+.input {
+  height: 45px;
+  display: flex;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 4px;
+}
+
+.input input {
+  width: 88%;
+  height: 30px;
+  background: none;
+  border: none;
+}
+
+.input input:focus {
+  outline: none;
+}
+
+.input input::placeholder {
+  color: #fff;
+}
+
+.input i {
+  color: #fff;
+}
+
+/*////////////////////////////////////////////////END OF NEW TASKS //////////////////////////////////////////////*/
+
+/* MEDIA QUERY FOR SMARTPHONES */
+@media (max-width: 768px) {
+  #sidebar {
+    width: 15rem;
+    margin-left: -15rem;
+  }
+
+
+  #bodyOverlay {
+    visibility: hidden;
+  }
+
+  #sidebarMenu {
+    margin-left: 0;
+    padding-top: 2.5rem;
+
+  }
+
+  #bodyOverlay.overlay {
+    visibility: visible;
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px) saturate(140%);
+    top: 0;
+    bottom: 0;
+    z-index: 6;
+    -webkit-backdrop-filter: blur(10px) saturate(100%);
+  }
+
+  .today {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  #menuToggle.active {
+    margin-left: 16rem;
+    transition: all 0.4s;
+  }
+
+  #sidebar.active {
+    margin-left: 0;
+  }
+
+
+
+  .page-content {
+    margin-left: 15rem;
+    margin: 0;
+  }
+
+  .page-content.stop {
+    width: 100%;
+    position: fixed;
+  }
+
+  .new-item {
+    width: 100%;
+    margin: 0;
+    
+  }
+}
+
+@media (min-width: 768px) {
+  #menuToggle {
+
+    visibility: hidden;
+  }
+
+}
+
+/* ////////////////////////////////////////////////END OF MEDIA QUERY //////////////////////////////////////////////*/
+#menuToggle input {
+  display: block;
+  width: 40px;
+  height: 32px;
+  position: absolute;
+  top: -7px;
+  left: -5px;
+
+  cursor: pointer;
+
+  opacity: 0;
+  /* hide this */
+  z-index: 2;
+  /* and place it over the hamburger */
+
+  -webkit-touch-callout: none;
+}
+
+/*
+ * Just a quick hamburger
+ */
+#menuToggle span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  margin-bottom: 4px;
+  position: relative;
+
+  background-color: #fff;
+  border-radius: 3px;
+
+  z-index: 1;
+
+  transform-origin: 4px 0px;
+
+  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0), background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0), opacity 0.55s ease;
+}
+
+#menuToggle span:first-child {
+  transform-origin: 0% 0%;
+}
+
+#menuToggle span:nth-last-child(2) {
+  transform-origin: 0% 100%;
+}
+
+/* 
+ * Transform all the slices of hamburger
+ * into a crossmark.
+ */
+#menuToggle input:checked~span {
+  opacity: 1;
+  transform: rotate(45deg) translate(-2px, -1px);
+  background: #232323;
+}
+
+/*
+ * But let's hide the middle one.
+ */
+#menuToggle input:checked~span:nth-last-child(3) {
+  opacity: 0;
+  transform: rotate(0deg) scale(0.2, 0.2);
+}
+
+/*
+ * Ohyeah and the last one should go the other direction
+ */
+#menuToggle input:checked~span:nth-last-child(2) {
+  transform: rotate(-45deg) translate(0, -1px);
+}
+
+/*
+ * Make this absolute positioned
+ * at the top left of the screen 
