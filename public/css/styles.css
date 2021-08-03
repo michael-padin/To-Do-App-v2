@@ -1,7 +1,8 @@
 body.home {
-  background-color: #abc4ff;
-
+  background-color: #809bce;
   height: 100vh;
+  width: 100%;
+  background-position: fixed;
 }
 
 body.list {
@@ -31,9 +32,7 @@ h1 {
 
 
 #sidebarMenu {
-  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
-
-  background-color: #abc4ff;
+  background-color: rgba(128, 155, 206, 0.7);
 
   backdrop-filter: blur(10px) saturate(100%);
   -webkit-backdrop-filter: blur(10px) saturate(100%) contrast(100%);
@@ -43,7 +42,8 @@ h1 {
   margin-left: 15rem;
   top: 0;
   border: none;
-  
+  padding: 1rem 1.5rem;
+  overflow: hidden;
 
 }
 
@@ -120,11 +120,25 @@ h1 {
 
 /* IMPORTANT PAGE */
 body.important {
-  background-color: #b4846c;
-  min-height: 100vh;
-  background-size: cover;
-  background-position: center;
+  background-color: #c38e70;
+  height: 100vh;
+  width: 100%;
 }
+
+.importantsidebarMenu{
+  background-color: rgba(195, 142, 112, 0.7); 
+   backdrop-filter: blur(10px) saturate(100%);
+  -webkit-backdrop-filter: blur(10px) saturate(100%) contrast(100%);
+  position: fixed;
+  width: 100%;
+  z-index: 5;
+  margin-left: 15rem;
+  top: 0;
+  border: none;
+  padding: 1rem 1.5rem;
+
+}
+
 
 .important-header {
   display: flex;
@@ -249,7 +263,7 @@ body.tasks {
 }
 
 .fa-star {
-  color: #f6bd60;
+  color: #c38e70;
   font-size: 16px;
 }
 
@@ -287,15 +301,31 @@ body.tasks {
   z-index: 5;
   margin-left: 15rem;
   width: calc(100% - 15rem);
-  bottom: 0px;
+  bottom: 0;
   position: fixed;
-  height: 60px;
-  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
   transition: all 0.4s;
-  background-color: #abc4ff;
+  background-color: rgba(128, 155, 206, 0.7);
   backdrop-filter: blur(10px) saturate(100%);
   -webkit-backdrop-filter: blur(10px) saturate(100%) contrast(100%);
+  padding: 1.2rem 1.5rem;
 }
+
+.important-new-item {
+  z-index: 5;
+  margin-left: 15rem;
+  padding: 1.2rem 1.5rem;
+  width: calc(100% - 15rem);
+  bottom: 0;
+  position: fixed;
+  transition: all 0.4s;
+  background-color: rgba(195, 142, 112, 0.7);
+  backdrop-filter: blur(10px) saturate(100%);
+  -webkit-backdrop-filter: blur(10px) saturate(100%) contrast(100%);
+  
+}
+
+
+
 
 .input {
   height: 45px;
@@ -314,6 +344,7 @@ body.tasks {
 
 .input input:focus {
   outline: none;
+  color: #fff;
 }
 
 .input input::placeholder {
@@ -323,6 +354,37 @@ body.tasks {
 .input i {
   color: #fff;
 }
+
+
+
+.important-input {
+  height: 45px;
+  display: flex;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 4px;
+}
+
+.important-input input {
+  width: 88%;
+  height: 30px;
+  background: none;
+  border: none;
+}
+
+.important-input input:focus {
+  outline: none;
+  color: #fff;
+}
+
+.important-input input::placeholder {
+  color: #fff;
+}
+
+.important-input i {
+  color: #fff;
+}
+
 
 /*////////////////////////////////////////////////END OF NEW TASKS //////////////////////////////////////////////*/
 
@@ -340,10 +402,13 @@ body.tasks {
 
   #sidebarMenu {
     margin-left: 0;
-    padding-top: 2.5rem;
+    padding: 2.5rem 1.5rem 0 1.5rem;
 
   }
-
+  .importantsidebarMenu {
+    margin-left: 0;
+    padding: 2.5rem 1.5rem 0 1.5rem;
+  }
   #bodyOverlay.overlay {
     visibility: visible;
     position: fixed;
@@ -386,8 +451,12 @@ body.tasks {
   .new-item {
     width: 100%;
     margin: 0;
-    
+  }  
+  .important-new-item {
+    width: 100%;
+    margin: 0;
   }
+  
 }
 
 @media (min-width: 768px) {
