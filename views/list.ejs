@@ -17,8 +17,8 @@
     <!-- Header  -->
     <div id="sidebarMenu" class="px-4">
       <div class="today mt-2 mb-2 ">
-        <h1 class = listTitle name= "listTitle">
-          <%=list.name%>
+        <h1 class = "listTitle" name= "listTitle">
+          <%=list%>
         </h1>
       </div>
     </div>
@@ -28,7 +28,7 @@
     <div class=" new-item px-4 pt-3">
       <form action="/listTasks" method="post">
         <div class="input">
-          <button type="submit" name="listButton " value=<%=list.name%> required>
+          <button type="submit" name="listButton " value=<%=list%> required>
             <i class="fas fa-plus fa-fw"></i></button>
           <input type="text" name="listTasks" placeholder="New Task">
         </div>

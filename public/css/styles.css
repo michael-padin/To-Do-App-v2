@@ -11,7 +11,7 @@ body.list {
 }
 
 .listTitle {
-  text-transform: capitalize;
+  text-transform: uppercase;
 }
 
 h1 {
@@ -180,22 +180,21 @@ body.tasks {
 .vertical-nav {
   align-items: center;
   width: 15rem;
-  max-width: 15rem;
   height: 100vh;
   position: fixed;
   top: 0;
   left: 0;
   transition: all 0.4s;
   z-index: 20;
-  overflow-y: auto;
+  overflow-y: scroll;
+  overflow-x: hidden;
   background-color: #fff;
-
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
 }
 
 
 .nav-separator {
-  margin: 15px auto;
+  margin: 15px ;
   border-bottom: 1px #aaa dotted;
   position: relative;
   width: 80%;
@@ -212,10 +211,6 @@ body.tasks {
   font-size: 20px;
 }
 
-.nav-item p {
-  font-size: 13px;
-  margin-left: 7rem;
-}
 
 .nav-link:hover {
   background: #f3f2f2;
@@ -289,6 +284,7 @@ body.tasks {
 .separator {
   margin: 3rem 0;
   border-bottom: 1px dashed #fff;
+  align-items: left;;
 }
 
 

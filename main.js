@@ -9,7 +9,8 @@ const app = express();
 const Today = require("./models/today");
 const Important = require("./models/important");
 const Tasks = require("./models/tasks");
-const ListTasks = require("./models/listTasks");
+const NewListTask = require("./models/newlistTask");
+const Lists = require("./models/newList");
 const { fromPairs } = require("lodash");
 
 mongoose.connect(
@@ -32,13 +33,6 @@ mongoose.connect(
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));
-
-// Today List Schema
-const todayListSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-});
-//Today List Model
-const Lists = mongoose.model("todayList", todayListSchema);
 
 app.post("/", (req, res) => {
   const inputTask = req.body.inputTask;
@@ -128,7 +122,27 @@ app.get("/tasks", (req, res) => {
   });
 });
 
+app.post("/lists", (req, res) => {
+  const lists = req.body.newList;
+  const newList = new Lists({ name: lists });
+  newList.save();
+  res.redirect("/lists/" + lists);
+});
 
+///////////////////////////////////////////////////////////////////////////////
+
+
+app.get("/lists/:customListName", (req, res) => {
+  const customListName = req.params.customListName;
+
+  Lists.find({}, (err, foundList) => {
+    if (foundList) {
+      res.render("list", { lists: foundList, list: customListName });
+    } else {
+      console.log(err);
+    }
+  });
+});
 
 const PORT = process.env.PORT || 4000;
 
