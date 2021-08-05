@@ -13,12 +13,11 @@
     <!-- bootstrap stylesheeet -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
-
     <!-- local stylesheet -->
     <link rel="stylesheet" href="/css/styles.css" />
-</head>
+    <link rel="icon" href="data:,">
 
-<body>
+</head>
     <!-- Vertical navbar -->
     <div class="vertical-nav" id="sidebar">
         <div class="py-4 px-3 mr-3 mb-0 bg-light">
@@ -57,21 +56,20 @@
 
             <!-- Created List -->
             <li class="nav-item">
-
                 <%lists.forEach((list)=> {%>
-                    <a href="/lists/<%=list.name%>" class="nav-link text-dark">
+                    <a href="/<%=list.name%>" class="nav-link text-dark">
                     <p name="storedList">
                         <%=list.name %>
                     </p>
                     </a>
                     <% });%>
+         
             </li>
-
             <!-- Add New List -->
             <li class="nav-item">
-                <form action="/lists/" method="POST">
+                <form action="/lists" method="POST">
                     <input type="hidden" value="List">
-                    <button type="submit" class="btn-submit" id="listBtn" name="listName" value="<%=lists%>">
+                    <button type="submit" class="btn-submit" id="listBtn>
                         <i class="nav-icon fas fa-plus fa-fw"></i>
                     </button>
                     <input class="new-list" type="text" name="newList" id="" placeholder="New List" />
@@ -79,7 +77,7 @@
             </li>
         </ul>
     </div>
-</body>
+<div>
 
 <!-- end of navigation bar -->
 <!-- Page content holder -->

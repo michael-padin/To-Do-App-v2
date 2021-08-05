@@ -1,25 +1,21 @@
-const bodyParser = require("body-parser");
-const { resolveInclude } = require("ejs");
+//jshint esversion:6
+
 const express = require("express");
+const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-var _ = require("lodash");
-require("dotenv").config();
-const router = express.Router();
 const app = express();
-const Today = require("./models/today");
-const Important = require("./models/important");
-const Tasks = require("./models/tasks");
-const NewListTask = require("./models/newlistTask");
-const Lists = require("./models/newList");
-const { fromPairs } = require("lodash");
+require("dotenv").config();
+var _ = require("lodash");
+
+app.set("view engine", "ejs");
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static("public"));
 
 mongoose.connect(
   "mongodb://localhost:27017/mytodolistDB",
   {
-    useFindAndModify: false,
     useUnifiedTopology: true,
     useNewUrlParser: true,
-    useCreateIndex: true,
   },
   (err) => {
     if (!err) {
@@ -30,16 +26,25 @@ mongoose.connect(
   }
 );
 
-app.set("view engine", "ejs");
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static(__dirname + "/public"));
+// Tasks Schema
+const tasksSchema = {
+  name: {type: String, required: true,}
+};
 
-app.post("/", (req, res) => {
-  const inputTask = req.body.inputTask;
-  const task = new Today({ name: inputTask });
-  task.save();
-  res.redirect("/");
-});
+// Tasks Model
+const Task = mongoose.model("Task", tasksSchema);
+
+// Lists Schema
+const listsSchema = {
+  name: String,
+  tasks: [tasksSchema],
+};
+
+//  Lists Model
+const List = mongoose.model("List", listsSchema);
+
+const doc1 = new Task({ name: "Create your Task now" });
+const defaultItem = [doc1];
 
 app.get("/", (req, res) => {
   let date = new Date().toLocaleString("en-us", {
@@ -48,101 +53,91 @@ app.get("/", (req, res) => {
     month: "long",
   });
 
-  Lists.find({}, (err, foundList) => {
-    if (err) {
-      console.log(err);
-    } else {
-      Today.find({}, (err, docs) => {
+  Task.find({}, (err, foundTasks) => {
+    if (foundTasks.length === 0) {
+      Task.insertMany(defaultItem, (err) => {
         if (err) {
-          console.log("error");
+          console.log(err);
         } else {
-          res.render("home", {
-            date: date,
-            homeTitle: "Today",
-            newTaskItem: docs,
-            lists: foundList,
-          });
+          console.log("Default Items inserted");
+          res.redirect("/");
         }
       });
+    } else {
+      AllList.find({}, (err, foundLists) => {
+        if (foundLists) {
+          
+          res.render("home", { homeTitle: "Today", newTaskItem: foundTasks, lists: foundLists, date: date });
+        }
+      })
     }
   });
 });
 
-app.post("/important", (req, res) => {
-  const importantInputTask = req.body.importantInputTask;
-  const importantTask = new Important({ name: importantInputTask });
-  importantTask.save();
-  res.redirect("/important");
+app.post("/", (req, res) => {
+  const taskInput = req.body.taskInput;
+  const taskButton = req.body.taskButton;
+  const task = new Task({ name: taskInput });
+
+  if (taskButton === "Today") {
+    task.save();
+    res.redirect("/");
+  } else {
+    List.findOne({ name: taskButton }, (err, foundList) => {
+      foundList.tasks.push(task);
+      foundList.save();
+      res.redirect("/" + taskButton);
+    });
+  }
 });
 
-app.get("/important", (req, res) => {
-  Lists.find({}, (err, importantFoundList) => {
-    if (err) {
-      console.log(err);
-    } else {
-      Important.find({}, (err, importantTask) => {
-        if (err) {
-          console.log("error");
-        } else {
-          res.render("important", {
-            importantTitle: "Important",
-            newTaskItem: importantTask,
-            lists: importantFoundList,
-          });
-        }
-      });
+app.get("/:customListName/", (req, res) => {
+  const customListName = _.capitalize(req.params.customListName);
+
+  // let date = new Date().toLocaleString("en-us", {
+  //   weekday: "long",
+  //   day: "numeric",
+  //   month: "long",
+  // });
+
+  List.findOne({ name: customListName }, (err, foundList) => {
+    if (!err) {
+      if (!foundList) {
+        const newList = new List({ name: customListName, tasks: defaultItem });
+        newList.save();
+        res.redirect("/" + customListName);
+      } else {
+        AllList.find({}, (err, foundLists)=> {
+          if (foundLists) {
+            res.render("list", {
+              homeTitle: foundList.name,
+              newTaskItem: foundList.tasks,
+              lists: foundLists
+            });
+          }
+        })
+      }
     }
   });
 });
 
-app.post("/tasks", (req, res) => {
-  const allTaskInput = req.body.allTaskInput;
-  const allTask = new Tasks({ name: allTaskInput });
-  allTask.save();
-  res.redirect("/");
-});
 
-app.get("/tasks", (req, res) => {
-  Lists.find({}, (err, allFoundList) => {
-    if (err) {
-      console.log(err);
-    } else {
-      Tasks.find({}, (err, allTask) => {
-        if (err) {
-          console.log("error");
-        } else {
-          res.render("tasks.ejs", {
-            allTaskTitle: "Tasks",
-            newTaskItem: allTask,
-            lists: allFoundList,
-          });
-        }
-      });
-    }
-  });
-});
+const allListSchema = {
+  name: {type: String, required: true,}
+}
+
+const AllList = mongoose.model("AllList", allListSchema)
+
 
 app.post("/lists", (req, res) => {
-  const lists = req.body.newList;
-  const newList = new Lists({ name: lists });
-  newList.save();
-  res.redirect("/lists/" + lists);
+  const newLists = req.body.newList;
+  const lists = new AllList({name: newLists});
+  lists.save();
+  res.redirect('/' + newLists);
 });
 
-///////////////////////////////////////////////////////////////////////////////
 
 
-app.get("/lists/:customListName", (req, res) => {
-  const customListName = req.params.customListName;
-
-  Lists.find({}, (err, foundList) => {
-    if (foundList) {
-      res.render("list", { lists: foundList, list: customListName });
-    } else {
-      console.log(err);
-    }
-  });
-});
 
 const PORT = process.env.PORT || 4000;
 

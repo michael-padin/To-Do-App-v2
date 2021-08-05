@@ -1,27 +1,10 @@
-body.home {
+body {
   background-color: #809bce;
   height: 100vh;
   width: 100%;
   background-position: fixed;
 }
 
-body.list {
-  background-color: #aaa;
-  min-width: 100%;
-}
-
-.listTitle {
-  text-transform: uppercase;
-}
-
-h1 {
-  color: #3d405b;
-
-}
-
-.today p {
-  color: #9381ff;
-}
 
 #sidebarCollapse {
   border: none;
@@ -33,7 +16,6 @@ h1 {
 
 #sidebarMenu {
   background-color: rgba(128, 155, 206, 0.7);
-
   backdrop-filter: blur(10px) saturate(100%);
   -webkit-backdrop-filter: blur(10px) saturate(100%) contrast(100%);
   position: fixed;
@@ -118,62 +100,6 @@ h1 {
   width: 100%;
 }
 
-/* IMPORTANT PAGE */
-body.important {
-  background-color: #c38e70;
-  height: 100vh;
-  width: 100%;
-}
-
-.importantsidebarMenu{
-  background-color: rgba(195, 142, 112, 0.7); 
-   backdrop-filter: blur(10px) saturate(100%);
-  -webkit-backdrop-filter: blur(10px) saturate(100%) contrast(100%);
-  position: fixed;
-  width: 100%;
-  z-index: 5;
-  margin-left: 15rem;
-  top: 0;
-  border: none;
-  padding: 1rem 1.5rem;
-
-}
-
-
-.important-header {
-  display: flex;
-  align-items: center;
-}
-
-.important-header i {
-  color: #fff;
-  vertical-align: middle;
-  font-size: 20px;
-  margin: 0 10px 0 0;
-}
-
-/* end of important page */
-
-/* TASKS PAGE */
-body.tasks {
-  background-color: hsl(0, 100%, 35%);
-  min-height: 100vh;
-  background-size: cover;
-  background-position: center;
-}
-
-.task-header {
-  display: flex;
-  align-items: center;
-}
-
-.task-header i {
-  align-items: center;
-  color: #fff;
-  font-size: 20px;
-  margin: 0 10px 0 0;
-}
-
 /* //////////////////////////////////////////////// TASKS PAGE //////////////////////////////////////////////*/
 
 /* Navigation Bar */
@@ -207,7 +133,6 @@ body.tasks {
 .nav-link {
   display: flex;
   align-items: center;
-  text-transform: capitalize;
   font-size: 20px;
 }
 
@@ -306,23 +231,6 @@ body.tasks {
   padding: 1.2rem 1.5rem;
 }
 
-.important-new-item {
-  z-index: 5;
-  margin-left: 15rem;
-  padding: 1.2rem 1.5rem;
-  width: calc(100% - 15rem);
-  bottom: 0;
-  position: fixed;
-  transition: all 0.4s;
-  background-color: rgba(195, 142, 112, 0.7);
-  backdrop-filter: blur(10px) saturate(100%);
-  -webkit-backdrop-filter: blur(10px) saturate(100%) contrast(100%);
-  
-}
-
-
-
-
 .input {
   height: 45px;
   display: flex;
@@ -401,10 +309,7 @@ body.tasks {
     padding: 2.5rem 1.5rem 0 1.5rem;
 
   }
-  .importantsidebarMenu {
-    margin-left: 0;
-    padding: 2.5rem 1.5rem 0 1.5rem;
-  }
+  
   #bodyOverlay.overlay {
     visibility: visible;
     position: fixed;
