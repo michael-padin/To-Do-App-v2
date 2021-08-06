@@ -28,7 +28,7 @@ mongoose.connect(
 
 // Tasks Schema
 const tasksSchema = {
-  name: {type: String, required: true,}
+  name: { type: String, required: true },
 };
 
 // Tasks Model
@@ -43,8 +43,7 @@ const listsSchema = {
 //  Lists Model
 const List = mongoose.model("List", listsSchema);
 
-const doc1 = new Task({ name: "Create your Task now" });
-const defaultItem = [doc1];
+const defaultItem = [];
 
 app.get("/", (req, res) => {
   let date = new Date().toLocaleString("en-us", {
@@ -53,25 +52,44 @@ app.get("/", (req, res) => {
     month: "long",
   });
 
-  Task.find({}, (err, foundTasks) => {
-    if (foundTasks.length === 0) {
-      Task.insertMany(defaultItem, (err) => {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log("Default Items inserted");
-          res.redirect("/");
+  Task.insertMany(defaultItem, (err, inserted) => {
+    if (inserted) {
+      Task.find({}, (err, foundTasks) => {
+        if (foundTasks) {
+          AllList.find({}, (err, foundLists) => {
+            if (foundLists) {
+              res.render("home", {
+                homeTitle: "Today",
+                newTaskItem: foundTasks,
+                lists: foundLists,
+                date: date,
+              });
+            }
+          });
         }
       });
-    } else {
-      AllList.find({}, (err, foundLists) => {
-        if (foundLists) {
-          
-          res.render("home", { homeTitle: "Today", newTaskItem: foundTasks, lists: foundLists, date: date });
-        }
-      })
     }
   });
+
+  // Task.find({}, (err, foundTasks) => {
+  //   if (foundTasks) {
+  //     Task.insertMany(defaultItem, (err) => {
+  //       if (err) {
+  //         console.log(err);
+  //       } else {
+  //         console.log("Default Items inserted");
+  //         res.redirect("/");
+  //       }
+  //     });
+  //   } else {
+  //     AllList.find({}, (err, foundLists) => {
+  //       if (foundLists) {
+
+  //         res.render("home", { homeTitle: "Today", newTaskItem: foundTasks, lists: foundLists, date: date });
+  //       }
+  //     })
+  //   }
+  // });
 });
 
 app.post("/", (req, res) => {
@@ -107,37 +125,32 @@ app.get("/:customListName/", (req, res) => {
         newList.save();
         res.redirect("/" + customListName);
       } else {
-        AllList.find({}, (err, foundLists)=> {
+        AllList.find({}, (err, foundLists) => {
           if (foundLists) {
             res.render("list", {
               homeTitle: foundList.name,
               newTaskItem: foundList.tasks,
-              lists: foundLists
+              lists: foundLists,
             });
           }
-        })
+        });
       }
     }
   });
 });
 
-
 const allListSchema = {
-  name: {type: String, required: true,}
-}
+  name: { type: String, required: true },
+};
 
-const AllList = mongoose.model("AllList", allListSchema)
-
+const AllList = mongoose.model("CustomList", allListSchema);
 
 app.post("/lists", (req, res) => {
   const newLists = req.body.newList;
-  const lists = new AllList({name: newLists});
+  const lists = new AllList({ name: newLists });
   lists.save();
-  res.redirect('/' + newLists);
+  res.redirect("/" + newLists);
 });
-
-
-
 
 const PORT = process.env.PORT || 4000;
 

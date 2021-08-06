@@ -1,8 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500&display=swap');
+
 body {
   background-color: #809bce;
   height: 100vh;
   width: 100%;
   background-position: fixed;
+  font-family: 'Roboto', sans-serif;
+}
+
+h2 {
+  color: #716F81;
 }
 
 
@@ -21,7 +28,7 @@ body {
   position: fixed;
   width: 100%;
   z-index: 5;
-  margin-left: 15rem;
+  margin-left: 16rem;
   top: 0;
   border: none;
   padding: 1rem 1.5rem;
@@ -45,8 +52,8 @@ body {
 .page-content {
   
   position: relative;
-  width: calc(100% -15rem);
-  margin-left: 15rem;
+  width: calc(100% -16rem);
+  margin-left: 16rem;
   white-space: nowrap;
 }
 .content {
@@ -71,6 +78,7 @@ body {
 
 .items p {
   margin: 0 0 0 .5rem;
+  font-weight: 400;
 }
 
 .items input {
@@ -88,16 +96,13 @@ body {
   border: none;
 }
 
-.delete {
-  z-index: 2;
-  margin-left: .5rem;
-  opacity: 0.4;
-  font-size: .8rem;
-}
-
 .today {
   height: 100%;
   width: 100%;
+}
+
+.today p,h1 {
+  color: #fff;
 }
 
 /* //////////////////////////////////////////////// TASKS PAGE //////////////////////////////////////////////*/
@@ -105,7 +110,7 @@ body {
 /* Navigation Bar */
 .vertical-nav {
   align-items: center;
-  width: 15rem;
+  width: 16rem;
   height: 100vh;
   position: fixed;
   top: 0;
@@ -113,32 +118,39 @@ body {
   transition: all 0.4s;
   z-index: 20;
   overflow-y: scroll;
-  overflow-x: hidden;
   background-color: #fff;
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
 }
 
 
 .nav-separator {
-  margin: 15px ;
+  margin-top: 15px ;
   border-bottom: 1px #aaa dotted;
   position: relative;
-  width: 80%;
+  width: 100%;
 }
 
 .nav-item {
   align-items: center;
 }
 
+.newList {
+  margin-bottom: 4.5rem;
+}
+
 .nav-link {
   display: flex;
   align-items: center;
-  font-size: 20px;
+  font-weight: 400;
 }
 
+.nav-link p {
+  margin-bottom: 0;
+}
 
 .nav-link:hover {
   background: #f3f2f2;
+  border-radius: 20px;
 }
 
 .btn-submit {
@@ -173,22 +185,23 @@ body {
 
 /* icons */
 .nav-icon {
-  margin-right: 8px;
+  margin-left: 8px;
+  margin-right: 18px;
 }
 
 .fa-cloud-sun {
-  color: #809bce;
-  font-size: 15px;
+  color: #716F81;
+  font-size: 16px;
   
 }
 
 .fa-star {
-  color: #c38e70;
-  font-size: 16px;
+  color: #716F81;
+    font-size: 16px;
 }
 
 .fa-tasks {
-  color: skyblue;
+  color: #716F81;
   font-size: 16px;
 }
 
@@ -198,19 +211,14 @@ body {
 }
 
 .fa-check {
+  color: #809bce;
   font-size: 35px;
   margin-right: 2px;
 }
 
 /* ////////////////////////////////////////////////END OF ICONS //////////////////////////////////////////////*/
 
-/* CONTENT */
 
-.separator {
-  margin: 3rem 0;
-  border-bottom: 1px dashed #fff;
-  align-items: left;;
-}
 
 
 
@@ -220,8 +228,8 @@ body {
 /* NEW TASKS */
 .new-item {
   z-index: 5;
-  margin-left: 15rem;
-  width: calc(100% - 15rem);
+  margin-left: 16rem;
+  width: calc(100% - 16rem);
   bottom: 0;
   position: fixed;
   transition: all 0.4s;
@@ -235,7 +243,7 @@ body {
   height: 45px;
   display: flex;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.2);
   border-radius: 4px;
 }
 
@@ -306,7 +314,7 @@ body {
 
   #sidebarMenu {
     margin-left: 0;
-    padding: 2.5rem 1.5rem 0 1.5rem;
+    padding: 2.8rem 1.5rem 0 1.5rem;
 
   }
   
