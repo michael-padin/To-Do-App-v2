@@ -14,6 +14,7 @@ app.use(express.static("public"));
 mongoose.connect(
   "mongodb://localhost:27017/mytodolistDB",
   {
+    useFindAndModify: false,
     useUnifiedTopology: true,
     useNewUrlParser: true,
   },
@@ -70,26 +71,6 @@ app.get("/", (req, res) => {
       });
     }
   });
-
-  // Task.find({}, (err, foundTasks) => {
-  //   if (foundTasks) {
-  //     Task.insertMany(defaultItem, (err) => {
-  //       if (err) {
-  //         console.log(err);
-  //       } else {
-  //         console.log("Default Items inserted");
-  //         res.redirect("/");
-  //       }
-  //     });
-  //   } else {
-  //     AllList.find({}, (err, foundLists) => {
-  //       if (foundLists) {
-
-  //         res.render("home", { homeTitle: "Today", newTaskItem: foundTasks, lists: foundLists, date: date });
-  //       }
-  //     })
-  //   }
-  // });
 });
 
 app.post("/", (req, res) => {
@@ -102,22 +83,39 @@ app.post("/", (req, res) => {
     res.redirect("/");
   } else {
     List.findOne({ name: taskButton }, (err, foundList) => {
-      foundList.tasks.push(task);
+      foundList.tasks.unshift(task);
       foundList.save();
       res.redirect("/" + taskButton);
     });
   }
 });
 
+app.post('/delete', (req, res) => {
+  const listName = req.body.listName;
+  const checkedItem = req.body.checkedItem;
+
+  if(listName === "Today") {
+    Task.findByIdAndRemove(checkedItem, (err) => {
+      if(!err) {
+        res.redirect("/");
+      }
+    });
+  } else {
+    List.findOneAndUpdate({name: listName}, {$pull: {tasks:{ _id: checkedItem}}}, (err, foundList) => {
+      if(foundList) {
+        res.redirect('/' + listName);
+      }
+    })
+
+  }
+
+});
+ 
+
+
+
 app.get("/:customListName/", (req, res) => {
-  const customListName = _.capitalize(req.params.customListName);
-
-  // let date = new Date().toLocaleString("en-us", {
-  //   weekday: "long",
-  //   day: "numeric",
-  //   month: "long",
-  // });
-
+  const customListName = (req.params.customListName)
   List.findOne({ name: customListName }, (err, foundList) => {
     if (!err) {
       if (!foundList) {
@@ -139,11 +137,15 @@ app.get("/:customListName/", (req, res) => {
   });
 });
 
+
+
+
 const allListSchema = {
   name: { type: String, required: true },
 };
 
 const AllList = mongoose.model("CustomList", allListSchema);
+const customList = [];
 
 app.post("/lists", (req, res) => {
   const newLists = req.body.newList;

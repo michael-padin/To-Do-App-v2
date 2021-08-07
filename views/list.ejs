@@ -20,21 +20,23 @@
   </div>
 
 
- <!-- Content -->
-    <div class="page-content p-4 " id="content">
-      <div class="content">
-        <%newTaskItem.forEach((item)=>{%>
+  <!-- Content -->
+  <div class="page-content p-4 " id="content">
+    <div class="content" id="itemsParent">
+      <%newTaskItem.forEach((task)=>{%>
+        <form action="/delete" method="post">
           <div class="items">
-            <i class="delete far fa-trash-alt"></i>
-            <input type="checkbox">
-            <p class="mb-0" contenteditable="true">
-              <%=item.name%>
+              <input onChange="this.form.submit()" type="checkbox" value="<%=task._id%>" name="checkedItem" id="checkboc">
+            <p class="mb-0">
+              <%=task.name%>
             </p>
           </div>
-          <%});%>
-      </div>
+          <input value="<%=homeTitle%>" name="listName" type="hidden">
+        </form>
+        <%});%>
     </div>
+  </div>
 
   <!-- Add NeW Task -->
   <%- include("task.ejs") %>
-<%- include("partials/footer.ejs") %>
+    <%- include("partials/footer.ejs") %>

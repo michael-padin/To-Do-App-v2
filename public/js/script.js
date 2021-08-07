@@ -30,22 +30,8 @@ $(function () {
 
 $(function () {
   $("#bodyOverlay").on("click", function () {
-    $("##menuToggle").toggleClass("active");
+    $("#menuToggle").toggleClass("active");
   });
 });
 
-
-
-$(() => {
-
-const cute = $(".items").length;
-
-$("#gwapo").html(cute);
-
-
-// $(btn).on("click", () => {
-
-// });
-
-})
 

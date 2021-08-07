@@ -17,7 +17,7 @@
       <h1 class="mb-0"">
         <%=homeTitle%>
       </h1>
-      <p class="mb-1">
+      <p class=" mb-1">
         <%=date%>
           </p>
     </div>
@@ -26,20 +26,18 @@
   <!-- Content -->
   <div class="page-content p-4 " id="content">
     <div class="content">
-      <%newTaskItem.forEach((item)=>{%>
-        <form action = "/delete" method="post">
-          <input type="hidden" value="<%= homeTitle%>" name="lists">
+      <%newTaskItem.forEach((task)=>{%>
+        <form action="/delete" method="post">
           <div class="items">
-            <input type="checkbox">
+            <input onChange="this.form.submit()" type="checkbox" value="<%=task._id%>" name="checkedItem">
             <p class="mb-0">
-              <%=item.name%>
+              <%=task.name%>
             </p>
           </div>
-          <%});%>
+            <input value="<%= homeTitle%>" name="listName" type="hidden">
         </form>
+        <%});%>
     </div>
   </div>
   <%- include("task.ejs") %>
-
-
     <%- include("partials/footer.ejs") %>
