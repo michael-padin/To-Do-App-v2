@@ -16,10 +16,6 @@ $(function () {
       $(".page-content").removeClass("stop");
     }
   });
-
-  $("#listBtn").on("click", () =>{
-  })
-
 });
 
 $(function () {
@@ -33,5 +29,3 @@ $(function () {
     $("#menuToggle").toggleClass("active");
   });
 });
-
-

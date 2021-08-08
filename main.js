@@ -17,6 +17,7 @@ mongoose.connect(
     useFindAndModify: false,
     useUnifiedTopology: true,
     useNewUrlParser: true,
+    useCreateIndex: true,
   },
   (err) => {
     if (!err) {
@@ -90,32 +91,31 @@ app.post("/", (req, res) => {
   }
 });
 
-app.post('/delete', (req, res) => {
+app.post("/delete", (req, res) => {
   const listName = req.body.listName;
   const checkedItem = req.body.checkedItem;
 
-  if(listName === "Today") {
+  if (listName === "Today") {
     Task.findByIdAndRemove(checkedItem, (err) => {
-      if(!err) {
+      if (!err) {
         res.redirect("/");
       }
     });
   } else {
-    List.findOneAndUpdate({name: listName}, {$pull: {tasks:{ _id: checkedItem}}}, (err, foundList) => {
-      if(foundList) {
-        res.redirect('/' + listName);
+    List.findOneAndUpdate(
+      { name: listName },
+      { $pull: { tasks: { _id: checkedItem } } },
+      (err, foundList) => {
+        if (foundList) {
+          res.redirect("/" + listName);
+        }
       }
-    })
-
+    );
   }
-
 });
- 
-
-
 
 app.get("/:customListName/", (req, res) => {
-  const customListName = (req.params.customListName)
+  const customListName = req.params.customListName;
   List.findOne({ name: customListName }, (err, foundList) => {
     if (!err) {
       if (!foundList) {
@@ -137,19 +137,15 @@ app.get("/:customListName/", (req, res) => {
   });
 });
 
-
-
-
 const allListSchema = {
   name: { type: String, required: true },
 };
-
 const AllList = mongoose.model("CustomList", allListSchema);
-const customList = [];
 
 app.post("/lists", (req, res) => {
   const newLists = req.body.newList;
   const lists = new AllList({ name: newLists });
+
   lists.save();
   res.redirect("/" + newLists);
 });
