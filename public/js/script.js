@@ -23,9 +23,8 @@ $(function () {
     $("#bodyOverlay, #menuToggle, #sidebar").toggleClass("active");
   });
 });
-
 $(function () {
   $("#bodyOverlay").on("click", function () {
-    $("#menuToggle").toggleClass("active");
+    $("#menuToggle").removeClass("active");
   });
 });

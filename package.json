@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "main": "main.js",
   "scripts": {
-    "all": "npm-run-all --parallel sync start  ",
-    "sync": "browser-sync start -p 'localhost:4000' --files '**/*.css' '**/*.ejs' '**/*.js' ",
+    "all": "npm-run-all --parallel node sync",
+    "sync": "browser-sync start -p 'localhost:4000' --files '**/*.css' '**/*.ejs' '**/*.js'",
     "mon": "nodemon",
-    "start": "node main.js",
+    "node": "node main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Michael Padin",

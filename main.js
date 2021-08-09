@@ -138,12 +138,12 @@ app.get("/:customListName/", (req, res) => {
 });
 
 const allListSchema = {
-  name: { type: String, required: true },
+  name: { type: String, required: true, unique: true},
 };
 const AllList = mongoose.model("CustomList", allListSchema);
 
 app.post("/lists", (req, res) => {
-  const newLists = req.body.newList;
+  const newLists = _.capitalize(req.body.newList);
   const lists = new AllList({ name: newLists });
 
   lists.save();
