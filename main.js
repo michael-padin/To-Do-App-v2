@@ -4,8 +4,10 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const app = express();
+const _ = require("lodash");
+const Task = require("./models/tasks");
+const List = require("./models/lists");
 require("dotenv").config();
-var _ = require("lodash");
 
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
@@ -27,23 +29,6 @@ mongoose.connect(
     }
   }
 );
-
-// Tasks Schema
-const tasksSchema = {
-  name: { type: String, required: true },
-};
-
-// Tasks Model
-const Task = mongoose.model("Task", tasksSchema);
-
-// Lists Schema
-const listsSchema = {
-  name: String,
-  tasks: [tasksSchema],
-};
-
-//  Lists Model
-const List = mongoose.model("List", listsSchema);
 
 const defaultItem = [];
 
@@ -138,7 +123,7 @@ app.get("/:customListName/", (req, res) => {
 });
 
 const allListSchema = {
-  name: { type: String, required: true, unique: true},
+  name: { type: String, required: true, unique: true },
 };
 const AllList = mongoose.model("CustomList", allListSchema);
 
