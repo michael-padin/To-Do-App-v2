@@ -36,7 +36,6 @@ const tasks = [];
 
 // HOME PAGE
 app.get("/", (req, res) => {
-
   let date = new Date().toLocaleString("en-us", {
     weekday: "long",
     day: "numeric",
@@ -71,12 +70,16 @@ app.post("/", (req, res) => {
   const taskInput = req.body.taskInput;
   const taskButton = req.body.taskButton;
   const task = new Task({ name: taskInput });
+  const tasks = new Tasks({ name: taskInput });
+
 
   if (taskButton === "Today") {
+    tasks.save();
     task.save();
     res.redirect("/");
   } else {
     List.findOne({ name: taskButton }, (err, foundList) => {
+      tasks.save();
       foundList.tasks.push(task);
       foundList.save();
       res.redirect("/lists/" + taskButton);
@@ -128,7 +131,8 @@ app.get("/importantPage", (req, res) => {
 app.post("/importantPage", (req, res) => {
   const ImportantTaskInput = req.body.ImportantTaskInput;
   const task = new Important({ name: ImportantTaskInput });
-
+  const tasks = new Tasks({name: ImportantTaskInput});
+  tasks.save();
   task.save();
   res.redirect("/importantPage");
 });
@@ -169,12 +173,12 @@ app.post("/tasksPage", (req, res) => {
   res.redirect("/tasksPage");
 });
 
-app.post("/deleteImportantTasks", (req, res) => {
+app.post("/deleteTasksItem", (req, res) => {
   const TaskscheckedItem = req.body.TaskscheckedItem;
 
   Tasks.findByIdAndRemove(TaskscheckedItem, (err) => {
     if (!err) {
-      res.redirect("/importantPage");
+      res.redirect("/tasksPage");
     }
   });
 });
@@ -185,6 +189,8 @@ app.get("/lists/:customListName", (req, res) => {
     if (!err) {
       if (!foundList) {
         const newList = new List({ name: customListName, tasks: tasks });
+        const taskss = new Tasks({name: tasks});
+        taskss.save();
         newList.save();
         res.redirect("/" + customListName);
       } else {

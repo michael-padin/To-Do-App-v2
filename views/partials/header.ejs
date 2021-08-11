@@ -69,8 +69,7 @@
                 <%lists.forEach((list)=> {%>
                 <form action="/deleteList" method="post">
                     <a href="/lists/<%=list.name%>" class="nav-link text-dark" id="lists">
-                        <input onChange="this.form.submit()" type="checkbox" value="<%=list._id%>" name="checkedList" id="checkbox">
-                        <i class="fas fa-grip-lines fa-fw nav-icon"></i>
+                        <input onChange="this.form.submit()" type="checkbox" value="<%=list._id%>" name="checkedList" id="checkbox" class= "nav-icon fa-fw">
                         <p class="mb-0">
                             <%=list.name %>
                         </p>
