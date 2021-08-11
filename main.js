@@ -5,8 +5,10 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const app = express();
 const _ = require("lodash");
-const Task = require("./models/tasks");
-const List = require("./models/lists");
+const Task = require("./models/task");
+const List = require("./models/list");
+const Important = require("./models/importantPage");
+const Tasks = require("./models/tasksPage");
 require("dotenv").config();
 
 app.set("view engine", "ejs");
@@ -30,20 +32,22 @@ mongoose.connect(
   }
 );
 
-const defaultItem = [];
+const tasks = [];
 
+// HOME PAGE
 app.get("/", (req, res) => {
+
   let date = new Date().toLocaleString("en-us", {
     weekday: "long",
     day: "numeric",
     month: "long",
   });
 
-  Task.insertMany(defaultItem, (err, inserted) => {
+  Task.insertMany(tasks, (err, inserted) => {
     if (inserted) {
       Task.find({}, (err, foundTasks) => {
         if (foundTasks) {
-          AllList.find({}, (err, foundLists) => {
+          List.find({}, (err, foundLists) => {
             if (foundLists) {
               res.render("home", {
                 homeTitle: "Today",
@@ -51,8 +55,12 @@ app.get("/", (req, res) => {
                 lists: foundLists,
                 date: date,
               });
+            } else {
+              console.log(err);
             }
           });
+        } else {
+          console.log(err);
         }
       });
     }
@@ -69,9 +77,9 @@ app.post("/", (req, res) => {
     res.redirect("/");
   } else {
     List.findOne({ name: taskButton }, (err, foundList) => {
-      foundList.tasks.unshift(task);
+      foundList.tasks.push(task);
       foundList.save();
-      res.redirect("/" + taskButton);
+      res.redirect("/lists/" + taskButton);
     });
   }
 });
@@ -92,28 +100,100 @@ app.post("/delete", (req, res) => {
       { $pull: { tasks: { _id: checkedItem } } },
       (err, foundList) => {
         if (foundList) {
-          res.redirect("/" + listName);
+          res.redirect("/lists/" + listName);
         }
       }
     );
   }
 });
 
-app.get("/:customListName/", (req, res) => {
+// IMPORTANT PAGE
+app.get("/importantPage", (req, res) => {
+  List.find({}, (err, foundLists) => {
+    if (foundLists) {
+      Important.find({}, (err, foundTasks) => {
+        if (foundTasks) {
+          res.render("importantPage", {
+            newTaskItem: foundTasks,
+            lists: foundLists,
+          });
+        }
+      });
+    } else {
+      console.log(err);
+    }
+  });
+});
+
+app.post("/importantPage", (req, res) => {
+  const ImportantTaskInput = req.body.ImportantTaskInput;
+  const task = new Important({ name: ImportantTaskInput });
+
+  task.save();
+  res.redirect("/importantPage");
+});
+
+app.post("/deleteImportantTasks", (req, res) => {
+  const importantTask = req.body.importantcheckedItem;
+
+  Important.findByIdAndRemove(importantTask, (err) => {
+    if (!err) {
+      res.redirect("/importantPage");
+    }
+  });
+});
+
+// TASKS PAGE
+app.get("/tasksPage", (req, res) => {
+  List.find({}, (err, foundLists) => {
+    if (foundLists) {
+      Tasks.find({}, (err, foundTasks) => {
+        if (foundTasks) {
+          res.render("tasksPage", {
+            newTaskItem: foundTasks,
+            lists: foundLists,
+          });
+        }
+      });
+    } else {
+      console.log(err);
+    }
+  });
+});
+
+app.post("/tasksPage", (req, res) => {
+  const tasksItem = req.body.tasksItem;
+  const task = new Tasks({ name: tasksItem });
+
+  task.save();
+  res.redirect("/tasksPage");
+});
+
+app.post("/deleteImportantTasks", (req, res) => {
+  const TaskscheckedItem = req.body.TaskscheckedItem;
+
+  Tasks.findByIdAndRemove(TaskscheckedItem, (err) => {
+    if (!err) {
+      res.redirect("/importantPage");
+    }
+  });
+});
+
+app.get("/lists/:customListName", (req, res) => {
   const customListName = req.params.customListName;
   List.findOne({ name: customListName }, (err, foundList) => {
     if (!err) {
       if (!foundList) {
-        const newList = new List({ name: customListName, tasks: defaultItem });
+        const newList = new List({ name: customListName, tasks: tasks });
         newList.save();
         res.redirect("/" + customListName);
       } else {
-        AllList.find({}, (err, foundLists) => {
-          if (foundLists) {
+        List.find({}, (err, allLists) => {
+          if (allLists) {
             res.render("list", {
               homeTitle: foundList.name,
               newTaskItem: foundList.tasks,
-              lists: foundLists,
+              lists: allLists,
             });
           }
         });
@@ -122,17 +202,28 @@ app.get("/:customListName/", (req, res) => {
   });
 });
 
-const allListSchema = {
-  name: { type: String, required: true, unique: true },
-};
-const AllList = mongoose.model("CustomList", allListSchema);
+// const customListSchema = {
+//   name: [{ type: String, required: true, unique: true }],
+// };
+// const CustomList = mongoose.model("CustomList", customListSchema);
 
 app.post("/lists", (req, res) => {
   const newLists = _.capitalize(req.body.newList);
-  const lists = new AllList({ name: newLists });
+  const lists = new List({ name: newLists });
 
   lists.save();
-  res.redirect("/" + newLists);
+  res.redirect("/lists/" + newLists);
+});
+
+app.post("/deleteList", (req, res) => {
+  const checkedList = req.body.checkedList;
+  List.findByIdAndRemove(checkedList, (err, removed) => {
+    if (removed) {
+      res.redirect("/");
+    } else {
+      console.log(err);
+    }
+  });
 });
 
 const PORT = process.env.PORT || 4000;

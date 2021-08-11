@@ -1,0 +1,47 @@
+<%- include("partials/header.ejs") %>
+
+    <!-- Overlay When Open Navigation Bar -->
+    <div id="bodyOverlay"> </div>
+
+    <!-- Menu Button for Mobile -->
+    <span class="material-icons" id="menuToggle">menu_open</span>
+
+    <!-- Title -->
+    <div id="sidebarMenu">
+        <div class="today">
+            <h1 class="mb-0"">
+          Tasks
+      </h1>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class=" page-content p-4 " id=" content">
+                <div class="content">
+                    <%newTaskItem.forEach((task)=>{%>
+                        <form action="/deleteTasksItem" method="post">
+                            <div class="items">
+                                <input onChange="this.form.submit()" type="checkbox" value="<%=task._id%>"
+                                    name="TaskscheckedItem">
+                                <p class="mb-0">
+                                    <%=task.name%>
+                                </p>
+                            </div>
+                        </form>
+                        <%});%>
+                </div>
+        </div>
+
+
+        <div class="new-item">
+            <form action="/tasksPage" method="post">
+                <div class="input">
+                    <button class="btn-submit" type="submit" name="taskButton" id="taskBtn" required>
+                        <i class="fas fa-plus fa-fw"></i></button>
+                    <input type="text" name="tasksItem" maxlength="29" placeholder="New Task"
+                        autocomplete="off" id="taskInput">
+                </div>
+            </form>
+        </div>
+
+<%- include("partials/footer.ejs") %>

@@ -45,7 +45,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="/important" class="nav-link text-dark">
+                <a href="/importantPage" class="nav-link text-dark">
                     <i class="nav-icon far fa-star fa-fw"></i>
                     <p>
                         Important
@@ -53,7 +53,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="/tasks" class="nav-link text-dark">
+                <a href="/tasksPage" class="nav-link text-dark">
                     <i class="nav-icon fas fa-tasks fa-fw"></i>
                     <p>
                         Tasks
@@ -67,12 +67,15 @@
             <!-- Created List -->
             <li class="nav-item">
                 <%lists.forEach((list)=> {%>
-                <a href="/<%=list.name%>" class="nav-link text-dark" id="lists">
-                    <i class="fas fa-grip-lines fa-fw nav-icon"></i>
-                    <p class="mb-0">
-                        <%=list.name %>
-                    </p>
-                </a>
+                <form action="/deleteList" method="post">
+                    <a href="/lists/<%=list.name%>" class="nav-link text-dark" id="lists">
+                        <input onChange="this.form.submit()" type="checkbox" value="<%=list._id%>" name="checkedList" id="checkbox">
+                        <i class="fas fa-grip-lines fa-fw nav-icon"></i>
+                        <p class="mb-0">
+                            <%=list.name %>
+                        </p>
+                    </a>
+                </form>
                 <% });%>
             </li>
 

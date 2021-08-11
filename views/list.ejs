@@ -22,7 +22,7 @@
       <%newTaskItem.forEach((task)=>{%>
         <form action="/delete" method="post">
           <div class="items">
-              <input onChange="this.form.submit()" type="checkbox" value="<%=task._id%>" name="checkedItem" id="checkboc">
+              <input onChange="this.form.submit()" type="checkbox" value="<%=task._id%>" name="checkedItem" id="checkbox">
             <p class="mb-0">
               <%=task.name%>
             </p>
