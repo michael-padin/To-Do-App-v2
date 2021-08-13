@@ -5,7 +5,7 @@
 
   <!-- Menu Button for Mobile -->
   <span class="material-icons" id="menuToggle">menu_open</span>
-  
+
   <!-- Title -->
   <div id="sidebarMenu">
     <div class="today">
@@ -22,15 +22,20 @@
   <div class="page-content p-4 " id="content">
     <div class="content">
       <%newTaskItem.forEach((task)=>{%>
-        <form action="/delete" method="post">
-          <div class="items">
+        <div class="items">
+          <form action="/delete" method="post">
             <input onChange="this.form.submit()" type="checkbox" value="<%=task._id%>" name="checkedItem">
             <p class="mb-0">
               <%=task.name%>
             </p>
-          </div>
             <input value="<%= homeTitle%>" name="listName" type="hidden">
-        </form>
+          </form>
+          <form class="star-form">
+            <input class="right-star" onChange="this.form.submit()" type="checkbox" value="<%=task._id%>"
+              name="TaskscheckedItem">
+            <i class="far fa-star fa-fw important-star"></i>
+          </form>
+        </div>
         <%});%>
     </div>
   </div>

@@ -34,7 +34,7 @@ mongoose.connect(
 
 const tasks = [];
 
-// HOME PAGE
+// RENDERING HOME PAGE //
 app.get("/", (req, res) => {
   let date = new Date().toLocaleString("en-us", {
     weekday: "long",
@@ -66,20 +66,17 @@ app.get("/", (req, res) => {
   });
 });
 
+// POSTING HOME PAGE //
 app.post("/", (req, res) => {
   const taskInput = req.body.taskInput;
   const taskButton = req.body.taskButton;
   const task = new Task({ name: taskInput });
-  const tasks = new Tasks({ name: taskInput });
-
 
   if (taskButton === "Today") {
-    tasks.save();
     task.save();
     res.redirect("/");
   } else {
     List.findOne({ name: taskButton }, (err, foundList) => {
-      tasks.save();
       foundList.tasks.push(task);
       foundList.save();
       res.redirect("/lists/" + taskButton);
@@ -87,6 +84,7 @@ app.post("/", (req, res) => {
   }
 });
 
+// DELETING ITEM IN HOME PAGE //
 app.post("/delete", (req, res) => {
   const listName = req.body.listName;
   const checkedItem = req.body.checkedItem;
@@ -110,7 +108,7 @@ app.post("/delete", (req, res) => {
   }
 });
 
-// IMPORTANT PAGE
+// RENDERING IMPORTANT PAGE //
 app.get("/importantPage", (req, res) => {
   List.find({}, (err, foundLists) => {
     if (foundLists) {
@@ -128,15 +126,15 @@ app.get("/importantPage", (req, res) => {
   });
 });
 
+//  POSTING IMPORTANT PAGE //
 app.post("/importantPage", (req, res) => {
   const ImportantTaskInput = req.body.ImportantTaskInput;
   const task = new Important({ name: ImportantTaskInput });
-  const tasks = new Tasks({name: ImportantTaskInput});
-  tasks.save();
   task.save();
   res.redirect("/importantPage");
 });
 
+// DELETING ITEM IN IMPORTANT PAGE //
 app.post("/deleteImportantTasks", (req, res) => {
   const importantTask = req.body.importantcheckedItem;
 
@@ -147,24 +145,31 @@ app.post("/deleteImportantTasks", (req, res) => {
   });
 });
 
-// TASKS PAGE
+// RENDERING TASKS PAGE //
 app.get("/tasksPage", (req, res) => {
   List.find({}, (err, foundLists) => {
     if (foundLists) {
       Tasks.find({}, (err, foundTasks) => {
         if (foundTasks) {
-          res.render("tasksPage", {
-            newTaskItem: foundTasks,
-            lists: foundLists,
+          Task.find({}, (err, foundTask) => {
+            if (foundTask) {
+              List.find()
+              res.render("tasksPage", {
+                newTaskItem: foundTasks,
+                lists: foundLists,
+                tasks: foundTask,
+              });
+            }
           });
         }
       });
     } else {
-      console.log(err);
+      return err;
     }
   });
 });
 
+// POSTING TASKS PAGE
 app.post("/tasksPage", (req, res) => {
   const tasksItem = req.body.tasksItem;
   const task = new Tasks({ name: tasksItem });
@@ -173,6 +178,7 @@ app.post("/tasksPage", (req, res) => {
   res.redirect("/tasksPage");
 });
 
+// DELETING ITEM IN TASKS PAGE
 app.post("/deleteTasksItem", (req, res) => {
   const TaskscheckedItem = req.body.TaskscheckedItem;
 
@@ -183,13 +189,24 @@ app.post("/deleteTasksItem", (req, res) => {
   });
 });
 
+// DELETING HOME ITEM IN TASKS PAGE //
+app.post("/deleteHomeTask", (req, res) => {
+  const homeTask = req.body.homeTaskscheckedItem;
+  Task.findByIdAndRemove(homeTask, (err) => {
+    if (!err) {
+      res.redirect("/tasksPage");
+    }
+  });
+});
+
+// RENDERING CUSTOM LISTS IN SIDEBAR
 app.get("/lists/:customListName", (req, res) => {
   const customListName = req.params.customListName;
   List.findOne({ name: customListName }, (err, foundList) => {
     if (!err) {
       if (!foundList) {
         const newList = new List({ name: customListName, tasks: tasks });
-        const taskss = new Tasks({name: tasks});
+        const taskss = new Tasks({ name: tasks });
         taskss.save();
         newList.save();
         res.redirect("/" + customListName);
@@ -208,11 +225,7 @@ app.get("/lists/:customListName", (req, res) => {
   });
 });
 
-// const customListSchema = {
-//   name: [{ type: String, required: true, unique: true }],
-// };
-// const CustomList = mongoose.model("CustomList", customListSchema);
-
+// POSTING LISTS IN SIDEBAR
 app.post("/lists", (req, res) => {
   const newLists = _.capitalize(req.body.newList);
   const lists = new List({ name: newLists });
@@ -221,6 +234,7 @@ app.post("/lists", (req, res) => {
   res.redirect("/lists/" + newLists);
 });
 
+// DELETING CUSTOM LISTS
 app.post("/deleteList", (req, res) => {
   const checkedList = req.body.checkedList;
   List.findByIdAndRemove(checkedList, (err, removed) => {
