@@ -81,6 +81,11 @@ app.post("/", (req, res) => {
       res.redirect("/lists/" + taskButton);
     });
   }
+
+
+
+
+
 });
 
 // DELETING ITEM IN HOME PAGE //
@@ -152,15 +157,15 @@ app.get("/tasksPage", (req, res) => {
         if (foundTasks) {
           Task.find({}, (err, foundTask) => {
             if (foundTask) {
-              List.find({}, (err, tasks) =>{
-                if (err) return hundleError(err); 
+              List.find({}, (err, tasks) => {
+                if (err) return hundleError(err);
                 res.render("tasksPage", {
                   newTaskItem: foundTasks,
                   lists: foundLists,
                   tasks: foundTask,
                   listTask: tasks,
                 });
-              })
+              });
             }
           });
         }
@@ -199,17 +204,20 @@ app.post("/deleteHomeTask", (req, res) => {
   });
 });
 
+app.post("/deleteCustomListItem", (req, res) => {
+  const listId = req.body.customListName;
+  const taskId = req.body.customListItem;
 
-app.post("/deleteCustomListItem", (req, res ) => {
-  const customListItem = req.body.customListItem;
-
-  List.findByIdAndRemove(customListItem, (err) => {
-    if (!err) {
-      res.redirect("/tasksPage");
+  List.findByIdAndUpdate(
+    listId,
+    { $pull: { tasks: { _id: taskId } } },
+    (err) => {
+      if (!err) {
+        res.redirect("/tasksPage");
+      }
     }
-  })
-})
-
+  );
+});
 
 // RENDERING CUSTOM LISTS IN SIDEBAR
 app.get("/lists/:customListName", (req, res) => {
@@ -231,6 +239,8 @@ app.get("/lists/:customListName", (req, res) => {
               newTaskItem: foundList.tasks,
               lists: allLists,
             });
+          } else {
+            return err;
           }
         });
       }

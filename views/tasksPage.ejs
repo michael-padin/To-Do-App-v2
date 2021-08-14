@@ -27,11 +27,6 @@
                     <%=cute.name%>
                 </p>
             </form>
-            <form action="/deleteHomeTask" method="post" class="star-form">
-                <input class="right-star" onChange="this.form.submit()" type="checkbox" value="<%=cute._id%>"
-                    name="TaskscheckedItem">
-                <i class="far fa-star important-star"></i>
-            </form>
         </div>
         <%});%>
 
@@ -41,14 +36,10 @@
         <div class="items">
             <form clas="items-form" action="/deleteCustomListItem" method="post">
                 <input onChange="this.form.submit()" type="checkbox" value="<%=each._id%>" name="customListItem">
+                <input onChange="this.form.submit()" type="hidden" value="<%=task._id%>" name="customListName">
                 <p class="mb-0">
                     <%=each.name%>
                 </p>
-            </form>
-            <form action="/deleteHomeTask" method="post" class="star-form">
-                <input class="right-star" onChange="this.form.submit()" type="checkbox" value="<%=each._id%>"
-                    name="TaskscheckedItem">
-                <i class="far fa-star important-star"></i>
             </form>
         </div>
         <%})%>
