@@ -33,7 +33,6 @@ mongoose.connect(
 );
 
 const tasks = [];
-
 // RENDERING HOME PAGE //
 app.get("/", (req, res) => {
   let date = new Date().toLocaleString("en-us", {
@@ -153,18 +152,19 @@ app.get("/tasksPage", (req, res) => {
         if (foundTasks) {
           Task.find({}, (err, foundTask) => {
             if (foundTask) {
-              List.find()
-              res.render("tasksPage", {
-                newTaskItem: foundTasks,
-                lists: foundLists,
-                tasks: foundTask,
-              });
+              List.find({}, (err, tasks) =>{
+                if (err) return hundleError(err); 
+                res.render("tasksPage", {
+                  newTaskItem: foundTasks,
+                  lists: foundLists,
+                  tasks: foundTask,
+                  listTask: tasks,
+                });
+              })
             }
           });
         }
       });
-    } else {
-      return err;
     }
   });
 });
@@ -199,15 +199,28 @@ app.post("/deleteHomeTask", (req, res) => {
   });
 });
 
+
+app.post("/deleteCustomListItem", (req, res ) => {
+  const customListItem = req.body.customListItem;
+
+  List.findByIdAndRemove(customListItem, (err) => {
+    if (!err) {
+      res.redirect("/tasksPage");
+    }
+  })
+})
+
+
 // RENDERING CUSTOM LISTS IN SIDEBAR
 app.get("/lists/:customListName", (req, res) => {
   const customListName = req.params.customListName;
   List.findOne({ name: customListName }, (err, foundList) => {
     if (!err) {
       if (!foundList) {
-        const newList = new List({ name: customListName, tasks: tasks });
-        const taskss = new Tasks({ name: tasks });
-        taskss.save();
+        const newList = new List({
+          name: customListName,
+          tasks: [{ name: [] }],
+        });
         newList.save();
         res.redirect("/" + customListName);
       } else {

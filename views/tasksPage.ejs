@@ -9,58 +9,74 @@
 <!-- Title -->
 <div id="sidebarMenu">
     <div class="today">
-        <h1 class="mb-0"">
-          Tasks
-      </h1>
+        <h1 class="mb-0">
+            Tasks
+        </h1>
     </div>
-  </div>
+</div>
 
-  <!-- Content -->
-  <div class=" page-content p-4 " id=" content">
-            <div class="content">
+<!-- Content -->
+<div class=" page-content p-4 " id=" content">
+    <div class="content">
+        <!-- DISPLAY ALL ITEMS FROM HOME PAGE  -->
+        <%tasks.forEach((cute)=>{%>
+        <div class="items">
+            <form clas="items-form" action="/deleteHomeTask" method="post">
+                <input onChange="this.form.submit()" type="checkbox" value="<%=cute._id%>" name="homeTaskscheckedItem">
+                <p class="mb-0">
+                    <%=cute.name%>
+                </p>
+            </form>
+            <form action="/deleteHomeTask" method="post" class="star-form">
+                <input class="right-star" onChange="this.form.submit()" type="checkbox" value="<%=cute._id%>"
+                    name="TaskscheckedItem">
+                <i class="far fa-star important-star"></i>
+            </form>
+        </div>
+        <%});%>
 
-                <%tasks.forEach((cute)=>{%>
-                <div class="items">
-                    <form clas="items-form" action="/deleteHomeTask" method="post">
-                        <input onChange="this.form.submit()" type="checkbox" value="<%=cute._id%>"
-                            name="homeTaskscheckedItem">
-                        <p class="mb-0">
-                            <%=cute.name%>
-                        </p>
-                    </form>
-                    <form action="/deleteHomeTask" method="post" class="star-form">
-                        <input class="right-star" onChange="this.form.submit()" type="checkbox" value="<%=cute._id%>"
-                            name="TaskscheckedItem">
-                        <i class="far fa-star important-star"></i>
-                    </form>
-                </div>
-                <%});%>
+        <!-- DISPLAY ALL ITEMS FROM CUSTOM LIST  -->
+        <%listTask.forEach((task)=>{%>
+        <%task.tasks.forEach((each) => {%>
+        <div class="items">
+            <form clas="items-form" action="/deleteCustomListItem" method="post">
+                <input onChange="this.form.submit()" type="checkbox" value="<%=each._id%>" name="customListItem">
+                <p class="mb-0">
+                    <%=each.name%>
+                </p>
+            </form>
+            <form action="/deleteHomeTask" method="post" class="star-form">
+                <input class="right-star" onChange="this.form.submit()" type="checkbox" value="<%=each._id%>"
+                    name="TaskscheckedItem">
+                <i class="far fa-star important-star"></i>
+            </form>
+        </div>
+        <%})%>
+        <%});%>
 
-
-                <%newTaskItem.forEach((task)=>{%>
-                <form action="/deleteTasksItem" method="post">
-                    <div class="items">
-                        <input onChange="this.form.submit()" type="checkbox" value="<%=task._id%>"
-                            name="TaskscheckedItem">
-                        <p class="mb-0">
-                            <%=task.name%>
-                        </p>
-                    </div>
-                </form>
-                <%});%>
-            </div>
-    </div>
-
-
-    <div class="new-item">
-        <form action="/tasksPage" method="post">
-            <div class="input">
-                <button class="btn-submit" type="submit" name="taskButton" id="taskBtn" required>
-                    <i class="fas fa-plus fa-fw"></i></button>
-                <input type="text" name="tasksItem" maxlength="29" placeholder="New Task" autocomplete="off"
-                    id="taskInput">
+        <!-- DISPLAY USER INPUT  -->
+        <%newTaskItem.forEach((task)=>{%>
+        <form action="/deleteTasksItem" method="post">
+            <div class="items">
+                <input onChange="this.form.submit()" type="checkbox" value="<%=task._id%>" name="TaskscheckedItem">
+                <p class="mb-0">
+                    <%=task.name%>
+                </p>
             </div>
         </form>
+        <%});%>
     </div>
+</div>
 
-    <%- include("partials/footer.ejs") %>
+<!-- USER INPUT  -->
+<div class="new-item">
+    <form action="/tasksPage" method="post">
+        <div class="input">
+            <button class="btn-submit" type="submit" name="taskButton" id="taskBtn" required>
+                <i class="fas fa-plus fa-fw"></i></button>
+            <input type="text" name="tasksItem" maxlength="29" placeholder="New Task" autocomplete="off" id="taskInput">
+        </div>
+    </form>
+</div>
+
+<%- include("partials/footer.ejs") %>
