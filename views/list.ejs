@@ -3,12 +3,12 @@
   <div id="bodyOverlay"> </div>
 
   <!-- Menu Button for Mobile -->
-  <span class="material-icons" id="menuToggle">menu_open</span>
+  <span class="material-icons" id="menuToggle">menu</span>
 
 
   <!-- Header  -->
-  <div id="sidebarMenu" class="px-4">
-    <div class="today mt-2 mb-2 ">
+  <div id="sidebarMenu">
+    <div class="today mt-2">
       <h1 class="listTitle text-white" name="listTitle">
         <%=homeTitle%>
       </h1>
@@ -17,7 +17,7 @@
 
 
   <!-- Content -->
-  <div class="page-content p-4 " id="content">
+  <div class="page-content" id="content">
     <div class="content" id="itemsParent">
       <%newTaskItem.forEach((task)=>{%>
         <form action="/delete" method="post">

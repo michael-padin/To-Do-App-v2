@@ -4,11 +4,14 @@
 <div id="bodyOverlay"> </div>
 
 <!-- Menu Button for Mobile -->
-<span class="material-icons" id="menuToggle">menu_open</span>
+<span class="material-icons-outlined" id="menuToggle">menu</span>
 
 <!-- Title -->
 <div id="sidebarMenu">
-    <div class="today">
+    <div class="today mt-2">
+        <i class="material-icons-outlined me-2">
+            home
+        </i>
         <h1 class="mb-0">
             Tasks
         </h1>
@@ -16,7 +19,7 @@
 </div>
 
 <!-- Content -->
-<div class=" page-content p-4 " id=" content">
+<div class=" page-content" id=" content">
     <div class="content">
         <!-- DISPLAY ALL ITEMS FROM HOME PAGE  -->
         <%tasks.forEach((cute)=>{%>
