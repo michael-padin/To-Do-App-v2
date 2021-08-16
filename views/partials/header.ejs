@@ -82,7 +82,7 @@
                         <input onChange="this.form.submit()" type="checkbox" value="<%=list._id%>" name="checkedList"
                             id="checkbox" class="checkbox">
                         <p class="mb-0">
-                            <%if(list.name.length > 13) {%>
+                            <%if(list.name.length > 14) {%>
 
                             <%=list.name.substring(0, 14) + "..."%>
                             <%} else {%>
@@ -93,13 +93,12 @@
                 </form>
                 <% });%>
             </li>
-
             <!-- Add New List -->
             <li class=" newList">
                 <form action="/lists" method="POST" class="list-form">
                     <input type="hidden" value="List">
                     <button type="submit" class="nav-btn p-0" id="listBtn">
-                        <i class="material-icons-round">add</i>
+                        <i class="list-btn material-icons-round ">add</i>
                     </button>
                     <input class="new-list p-0" type="text" name="newList" id="listInput" placeholder="New List"
                         autocomplete="off" />

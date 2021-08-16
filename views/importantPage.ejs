@@ -7,8 +7,9 @@
 <span class="material-icons" id="menuToggle">menu</span>
 
 <!-- Title -->
+<div class="top-level" id="sidebarMenu3"></div>
 <div id="sidebarMenu">
-    <div class="today mt-2">
+    <div class="today pt-1">
         <i class="material-icons-outlined me-2">
             star_rate
             </i>
@@ -24,7 +25,7 @@
         <%newTaskItem.forEach((task)=>{%>
         <form action="/deleteImportantTasks" method="post">
             <div class="items">
-                <input onChange="this.form.submit()" type="checkbox" value="<%=task._id%>" name="importantcheckedItem">
+                <input onChange="this.form.submit()" type="checkbox" value="<%=task._id%>" name="importantcheckedItem" id="checkbox">
                 <p class="mb-0">
                     <%=task.name%>
                 </p>
@@ -34,7 +35,7 @@
     </div>
 </div>
 
-
+<div class="new-item2"></div>
 <div class="new-item">
     <form action="/importantPage" method="post">
         <div class="input">

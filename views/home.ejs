@@ -7,24 +7,25 @@
   <span class="material-icons" id="menuToggle">menu</span>
 
   <!-- Title -->
+  <div class="top-level" id="sidebarMenu2"></div>
   <div id="sidebarMenu">
-    <div class="today mt-1 px-1">
+    <div class="today">
       <h1 class="mb-0">
         <%=homeTitle%>
       </h1>
     </div>
-    <p class=" mb-1 px-1">
+    <p class="mb-0">
       <%=date%>
         </p>
   </div>
 
   <!-- Content -->
-  <div class="page-content mt-3" id="content">
-    <div class="content">
+  <div class="page-content" id="content">
+    <div class="home-content">
       <%newTaskItem.forEach((task)=>{%>
         <div class="items">
           <form action="/delete" method="post">
-            <input onChange="this.form.submit()" type="checkbox" value="<%=task._id%>" name="checkedItem">
+            <input onChange="this.form.submit()" type="checkbox" value="<%=task._id%>" name="checkedItem" >
             <p class="mb-0">
               <%=task.name%>
             </p>
