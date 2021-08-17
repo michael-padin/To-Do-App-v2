@@ -1,15 +1,13 @@
 const mongoose = require("mongoose");
-
-const tasksSchema = {
-  name: {type: String,}
-}
+const Schema = mongoose.Schema;
+const tasksSchema = new Schema({
+  name: { type: String },
+});
 // Lists Schema
-const listsSchema = {
-    name: {type: String},
-    tasks: [tasksSchema],
-  };
-  
+const listsSchema = new Schema({
+  name: { type: String },
+  link: { type: String , default: ''},
+  tasks: [tasksSchema],
+});
 
-//  Lists Model
 module.exports = mongoose.model("List", listsSchema);
-  

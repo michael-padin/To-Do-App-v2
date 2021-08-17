@@ -3,7 +3,6 @@ const List = require("../models/list");
 const _ = require("lodash");
 const router = express.Router();
 
-
 router.post("/deleteCustomListItem", (req, res) => {
   const listId = req.body.customListName;
   const taskId = req.body.customListItem;
@@ -19,21 +18,17 @@ router.post("/deleteCustomListItem", (req, res) => {
   );
 });
 
-const tasks = []
+const tasks = [];
 
 // RENDERING CUSTOM LISTS IN SIDEBAR
 router.get("/lists/:customListName", (req, res) => {
-  const taskButton = req.body.taskButton;
-  const customListName = req.params.customListName;
+  const customListName = _.lowerCase(req.params.customListName);
+  const newList = new List({ name: customListName, tasks: tasks });
   List.findOne({ name: customListName }, (err, foundList) => {
     if (!err) {
       if (!foundList) {
-        const newList = new List({
-          name: customListName,
-          tasks: tasks
-        });
+        res.redirect("/lists/" + customListName);
         newList.save();
-        res.redirect("/lists/" + taskButton);
       } else {
         List.find({}, (err, allLists) => {
           if (allLists) {
@@ -53,10 +48,7 @@ router.get("/lists/:customListName", (req, res) => {
 
 // POSTING LISTS IN SIDEBAR
 router.post("/lists", (req, res) => {
-  const newLists = _.capitalize(req.body.newList);
-  const lists = new List({ name: newLists });
-
-  lists.save();
+  const newLists = _.kebabCase(req.body.newList);
   res.redirect("/lists/" + newLists);
 });
 
