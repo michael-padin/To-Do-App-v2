@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
 const tasksSchema = {
-  name: {type: String, ref: "List"}
+  name: {type: String,}
 }
 // Lists Schema
 const listsSchema = {
-    name: {type: String, required: true},
+    name: {type: String},
     tasks: [tasksSchema],
   };
   
