@@ -23,10 +23,15 @@ router.get("/important", (req, res) => {
 
 //  POSTING IMPORTANT PAGE //
 router.post("/importantPage", (req, res) => {
-  const ImportantTaskInput = req.body.ImportantTaskInput;
-  const task = new Important({ name: ImportantTaskInput });
-  task.save();
-  res.redirect("/important");
+  const importantTaskInput = req.body.ImportantTaskInput;
+  const task = new Important({ name: importantTaskInput });
+
+  if (importantTaskInput == "") {
+    res.redirect("/important");
+  } else {
+    task.save();
+    res.redirect("/important");
+  }
 });
 
 // DELETING ITEM IN IMPORTANT PAGE //

@@ -1,6 +1,6 @@
 const express = require("express");
 const Task = require("../models/task");
-const Tasks = require("../models/home");
+const Home = require("../models/home");
 const List = require("../models/list");
 const router = express.Router();
 
@@ -8,9 +8,9 @@ const router = express.Router();
 router.get("/tasks", (req, res) => {
   List.find({}, (err, foundLists) => {
     if (foundLists) {
-      Tasks.find({}, (err, foundTasks) => {
+      Task.find({}, (err, foundTasks) => {
         if (foundTasks) {
-          Task.find({}, (err, foundTask) => {
+          Home.find({}, (err, foundTask) => {
             if (foundTask) {
               List.find({}, (err, tasks) => {
                 if (err) return hundleError(err);
@@ -32,17 +32,23 @@ router.get("/tasks", (req, res) => {
 // POSTING TASKS PAGE
 router.post("/tasksPage", (req, res) => {
   const tasksItem = req.body.tasksItem;
-  const task = new Tasks({ name: tasksItem });
+  const task = new Task({ name: tasksItem });
 
-  task.save();
-  res.redirect("/tasks");
+  Task.findOne({ name: tasksItem }, (err, foundtasks) => {
+    if (!foundtasks) {
+      task.save();
+      res.redirect("/tasks");
+    } else {
+      res.redirect("/tasks");
+    }
+  });
 });
 
 // DELETING ITEM IN TASKS PAGE
 router.post("/deleteTasksItem", (req, res) => {
   const TaskscheckedItem = req.body.TaskscheckedItem;
 
-  Tasks.findByIdAndRemove(TaskscheckedItem, (err) => {
+  Task.findByIdAndRemove(TaskscheckedItem, (err) => {
     if (!err) {
       res.redirect("/tasks");
     }
@@ -52,7 +58,7 @@ router.post("/deleteTasksItem", (req, res) => {
 // DELETING HOME ITEM IN TASKS PAGE //
 router.post("/deleteHomeTask", (req, res) => {
   const homeTask = req.body.homeTaskscheckedItem;
-  Task.findByIdAndRemove(homeTask, (err) => {
+  Home.findByIdAndRemove(homeTask, (err) => {
     if (!err) {
       res.redirect("/tasks");
     }

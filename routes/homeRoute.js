@@ -1,5 +1,5 @@
 const express = require("express");
-const Task = require("../models/home");
+const Home = require("../models/home");
 const List = require("../models/list");
 const router = express.Router();
 
@@ -13,9 +13,9 @@ router.get("/", (req, res) => {
     month: "long",
   });
 
-  Task.insertMany(tasks, (err, inserted) => {
+  Home.insertMany(tasks, (err, inserted) => {
     if (inserted) {
-      Task.find({}, (err, foundTasks) => {
+      Home.find({}, (err, foundTasks) => {
         if (foundTasks) {
           List.find({}, (err, foundLists) => {
             if (foundLists) {
@@ -41,16 +41,33 @@ router.get("/", (req, res) => {
 router.post("/", (req, res) => {
   const taskInput = req.body.taskInput;
   const taskButton = req.body.taskButton;
-  const task = new Task({ name: taskInput });
+  const task = new Home({ name: taskInput });
 
   if (taskButton === "Today") {
-    task.save();
-    res.redirect("/");
+    Home.findOne({ name: taskInput }, (err, foundTask) => {
+      if (taskInput == "") {
+        res.redirect("/");
+      } else {
+        task.save();
+        res.redirect("/");
+      }
+
+      // if (!foundTask) {
+      //   res.redirect("/");
+      //   task.save();
+      // } else {
+      //   res.redirect("/");
+      // }
+    });
   } else {
     List.findOne({ name: taskButton }, (err, foundList) => {
-      foundList.tasks.push(task);
-      foundList.save();
-      res.redirect("/lists/" + taskButton);
+      if (taskInput == "") {
+        res.redirect("/lists/" + taskButton);
+      } else {
+        foundList.tasks.push(task);
+        foundList.save();
+        res.redirect("/lists/" + taskButton);
+      }
     });
   }
 });
@@ -61,7 +78,7 @@ router.post("/delete", (req, res) => {
   const checkedItem = req.body.checkedItem;
 
   if (listName === "Today") {
-    Task.findByIdAndRemove(checkedItem, (err) => {
+    Home.findByIdAndRemove(checkedItem, (err) => {
       if (!err) {
         res.redirect("/");
       }

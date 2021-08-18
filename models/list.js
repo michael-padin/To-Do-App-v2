@@ -6,7 +6,6 @@ const tasksSchema = new Schema({
 // Lists Schema
 const listsSchema = new Schema({
   name: { type: String },
-  link: { type: String , default: ''},
   tasks: [tasksSchema],
 });
 

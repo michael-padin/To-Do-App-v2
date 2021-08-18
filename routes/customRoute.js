@@ -49,7 +49,11 @@ router.get("/lists/:customListName", (req, res) => {
 // POSTING LISTS IN SIDEBAR
 router.post("/lists", (req, res) => {
   const newLists = _.kebabCase(req.body.newList);
+  if (newLists == '') {
+    res.redirect("/")
+  } else {
   res.redirect("/lists/" + newLists);
+}
 });
 
 // DELETING CUSTOM LISTS
@@ -63,5 +67,13 @@ router.post("/deleteList", (req, res) => {
     }
   });
 });
+
+
+router.get("/lists"), (req, res) => {
+  res.render("lists");
+}
+
+
+
 
 module.exports = router;
