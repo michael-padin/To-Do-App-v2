@@ -5,9 +5,10 @@ const homeRoute = require("./routes/homeRoute");
 const importantRoute = require("./routes/importantRoute");
 const tasksRoute = require("./routes/tasksRoute");
 const customRoute = require("./routes/customRoute");
-require("dotenv").config();
-const app = express();
-const url = process.env.MONGO_URI;
+const dotenv = require('dotenv')
+dotenv.config({path: __dirname + '/.env'});
+const app = express();t
+const url = process.env.MONGO_URI
 
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
