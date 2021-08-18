@@ -3,17 +3,15 @@
   "version": "1.0.0",
   "main": "main.js",
   "scripts": {
-    "all": "npm-run-all --parallel node sync",
-    "sync": "browser-sync start -p 'localhost:4000' --files '**/*.css' '**/*.ejs' '**/*.js'",
+    "all": "npm-run-all --parallel mon ",
     "mon": "nodemon",
-    "node": "node main.js",
+    "start": "node main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Michael Padin",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
-    "browser-sync": "^2.27.5",
     "dotenv": "^10.0.0",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
