@@ -17,7 +17,7 @@ app.use(tasksRoute);
 app.use(customRoute);
 
 mongoose.connect(
-  'mongodb://localhost:27017/todolist',
+  process.env.MONGO_URI,
   {
     useFindAndModify: false,
     useUnifiedTopology: true,
