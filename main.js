@@ -5,10 +5,9 @@ const homeRoute = require("./routes/homeRoute");
 const importantRoute = require("./routes/importantRoute");
 const tasksRoute = require("./routes/tasksRoute");
 const customRoute = require("./routes/customRoute");
-const dotenv = require('dotenv')
-dotenv.config({path: __dirname + '/.env'});
-const app = express();t
-const url = process.env.MONGO_URI
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
+const app = express();
 
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
@@ -19,7 +18,7 @@ app.use(tasksRoute);
 app.use(customRoute);
 
 mongoose.connect(
- url,
+  process.env.MONGO_URI,
   {
     useFindAndModify: false,
     useUnifiedTopology: true,
