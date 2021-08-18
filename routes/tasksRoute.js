@@ -34,14 +34,12 @@ router.post("/tasksPage", (req, res) => {
   const tasksItem = req.body.tasksItem;
   const task = new Task({ name: tasksItem });
 
-  Task.findOne({ name: tasksItem }, (err, foundtasks) => {
-    if (!foundtasks) {
-      task.save();
+    if (tasksItem == '') {
       res.redirect("/tasks");
     } else {
+      task.save();
       res.redirect("/tasks");
     }
-  });
 });
 
 // DELETING ITEM IN TASKS PAGE
