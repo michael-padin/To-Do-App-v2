@@ -6,7 +6,7 @@ const importantRoute = require("./routes/importantRoute");
 const tasksRoute = require("./routes/tasksRoute");
 const customRoute = require("./routes/customRoute");
 const path = require('path');
-require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
+require('dotenv').config({ path: path.resolve(__dirname, './.env') });
 const app = express();
 
 app.set("view engine", "ejs");
