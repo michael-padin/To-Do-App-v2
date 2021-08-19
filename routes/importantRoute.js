@@ -5,9 +5,9 @@ const router = express.Router();
 
 // RENDERING IMPORTANT PAGE //
 router.get("/important", (req, res) => {
-  List.find({}, (err, foundLists) => {
+  List.find({}, undefined, {sort: {created_at: 'desc'}}, (err, foundLists) => {
     if (foundLists) {
-      Important.find({}, (err, foundTasks) => {
+      Important.find({}, undefined, {sort: {created_at: 'desc'}}, (err, foundTasks) => {
         if (foundTasks) {
           res.render("important", {
             newTaskItem: foundTasks,

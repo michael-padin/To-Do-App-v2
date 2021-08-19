@@ -17,7 +17,7 @@ app.use(tasksRoute);
 app.use(customRoute);
 
 mongoose.connect(
-  process.env.MONGO_URI,
+  'mongodb://localhost:27017/test',
   {
     useFindAndModify: false,
     useUnifiedTopology: true,
@@ -38,6 +38,6 @@ if(port == null || port == "") {
   port = 4000
 }
 
-app.listen(port, function () {
+app.listen(10000, function () {
   console.log("server running");
 });

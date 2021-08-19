@@ -15,9 +15,9 @@ router.get("/", (req, res) => {
 
   Home.insertMany(tasks, (err, inserted) => {
     if (inserted) {
-      Home.find({}, (err, foundTasks) => {
+      Home.find({}, undefined, { sort: {created_at: 'desc'} }, (err, foundTasks) => {
         if (foundTasks) {
-          List.find({}, (err, foundLists) => {
+          List.find({}, undefined, {sort: {created_at: 'desc'}}, (err, foundLists) => {
             if (foundLists) {
               res.render("home", {
                 homeTitle: "Today",
@@ -60,11 +60,11 @@ router.post("/", (req, res) => {
       // }
     });
   } else {
-    List.findOne({ name: taskButton }, (err, foundList) => {
+    List.findOne({ name: taskButton }, undefined, {sort: {created_at: 'desc'}}, (err, foundList) => {
       if (taskInput == "") {
         res.redirect("/lists/" + taskButton);
       } else {
-        foundList.tasks.push(task);
+        foundList.tasks.unshift(task);
         foundList.save();
         res.redirect("/lists/" + taskButton);
       }
@@ -72,7 +72,7 @@ router.post("/", (req, res) => {
   }
 });
 
-// DELETING ITEM IN HOME PAGE //
+// DELETING ITEMS IN  CUSTOM LISTS AND HOME PAGE //
 router.post("/delete", (req, res) => {
   const listName = req.body.listName;
   const checkedItem = req.body.checkedItem;

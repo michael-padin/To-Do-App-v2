@@ -6,13 +6,13 @@ const router = express.Router();
 
 // RENDERING TASKS PAGE //
 router.get("/tasks", (req, res) => {
-  List.find({}, (err, foundLists) => {
+  List.find({}, undefined, {sort: {created_at: 'desc'}}, (err, foundLists) => {
     if (foundLists) {
-      Task.find({}, (err, foundTasks) => {
+      Task.find({},undefined, {sort: {created_at: 'desc'}}, (err, foundTasks) => {
         if (foundTasks) {
-          Home.find({}, (err, foundTask) => {
+          Home.find({}, undefined, {sort: {created_at: 'desc'}},(err, foundTask) => {
             if (foundTask) {
-              List.find({}, (err, tasks) => {
+              List.find({}, undefined, {sort: {created_at: 'desc'}},(err, tasks) => {
                 if (err) return hundleError(err);
                 res.render("tasks", {
                   newTaskItem: foundTasks,
@@ -62,5 +62,23 @@ router.post("/deleteHomeTask", (req, res) => {
     }
   });
 });
+
+
+router.post("/deleteCustomListItem", (req, res) => {
+  const listId = req.body.customListName;
+  const taskId = req.body.customListItem;
+
+  List.findByIdAndUpdate(
+    listId,
+    { $pull: { tasks: { _id: taskId } } },
+    (err) => {
+      if (!err) {
+        res.redirect("/tasks");
+      }
+    }
+  );
+});
+
+
 
 module.exports = router;
