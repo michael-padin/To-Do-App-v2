@@ -34,3 +34,14 @@ $(function () {
     $("#menuToggle").removeClass("active");
   });
 });
+
+// sort items in TASKS PAGE by created time
+$(function () {
+  $(".task")
+    .sort(function (a, b) {
+      return new Date($(a).data("date")) - new Date($(b).data("date"));
+    })
+    .each(function () {
+      $(".content").prepend($(this).parent().parent());
+    });
+});

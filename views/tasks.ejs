@@ -21,50 +21,45 @@
 
 <!-- Content -->
 <div class=" page-content" id=" content">
-    <div class="content">
+    <div class="content" id="parent">
         <!-- DISPLAY ALL ITEMS FROM HOME PAGE  -->
-        <form clas="items-form" action="/deleteHomeTask" method="post">
-            <%tasks.forEach((cute)=>{%>
-            <div class="items " data="<%=cute.created_at %> ">
+        <%tasks.forEach((cute)=>{%>
+        <div class="items  item">
+            <form clas="items-form" action="/deleteHomeTask" method="post">
                 <input onChange="this.form.submit()" type="checkbox" value="<%=cute._id%>" name="homeTaskscheckedItem">
-                <p class="mb-0">
+                <p class="task mb-0" data-date="<%=cute.created_at %> ">
                     <%=cute.name%>
                 </p>
-            </div>
-            <%});%>
-        </form>
-
-        <div class="sub-btn">
-            <div clas="list-items">
-                <!-- DISPLAY ALL ITEMS FROM CUSTOM LIST  -->
-                <form clas="items-form" action="/deleteCustomListItem" method="post">
-                    <%listTask.forEach((task)=>{%>
-                    <%task.tasks.forEach((each) => {%>
-                    <div class="items" data="<%=task.created_at%>">
-                        <input onChange="this.form.submit()" type="checkbox" value="<%=each._id%>"
-                            name="customListItem">
-                        <input onChange="this.form.submit()" type="hidden" value="<%=task._id%>" name="customListName">
-                        <p class="mb-0">
-                            <%=each.name%>
-                        </p>
-                    </div>
-                    <%})%>
-                    <%});%>
-                </form>
-            </div>
+            </form>
         </div>
+        <%});%>
+
+        <!-- DISPLAY ALL ITEMS FROM CUSTOM LIST  -->
+        <%listTask.forEach((task)=>{%>
+        <%task.tasks.forEach((each) => {%>
+        <div class="items item">
+            <form clas="items-form" action="/deleteCustomListItem" method="post">
+                <input onChange="this.form.submit()" type="checkbox" value="<%=each._id%>" name="customListItem">
+                <input onChange="this.form.submit()" type="hidden" value="<%=task._id%>" name="customListName">
+                <p class="mb-0 task" data-date="<%=each.created_at%>">
+                    <%=each.name%>
+                </p>
+            </form>
+        </div>
+        <%})%>
+        <%});%>
 
         <!-- DISPLAY USER INPUT  -->
-        <form action="/deleteTasksItem" method="post">
-            <%newTaskItem.forEach((task)=>{%>
-            <div class="items" data-date="<%=task.created_at%>">
+        <%newTaskItem.forEach((task)=>{%>
+        <div class="items item">
+            <form action="/deleteTasksItem" method="post">
                 <input onChange="this.form.submit()" type="checkbox" value="<%=task._id%>" name="TaskscheckedItem">
-                <p class="mb-0">
+                <p class="mb-0 task"  data-date="<%=task.created_at%>">
                     <%=task.name%>
                 </p>
-            </div>
-            <%});%>
-        </form>
+            </form>
+        </div>
+        <%});%>
     </div>
 </div>
 
